@@ -1,6 +1,6 @@
 #subzero [![npm version](https://badge.fury.io/js/subzero.svg)](https://badge.fury.io/js/subzero) [![Build Status](https://travis-ci.org/msteckyefantis/subzero.svg?branch=master)](https://travis-ci.org/msteckyefantis/subzero)
 
-[![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
+[![mk.gif](https://s23.postimg.org/ov0dy35hn/image.gif)](https://postimg.org/image/4nmy5s807/)
 
 ##About:
 Freeze a class and its prototype, or freeze an object.
@@ -114,6 +114,8 @@ subzero.deepFreezeClass( C );
 // !Object.isFrozen( InnerClass.x );
 // !Object.isFrozen( InnerClass.x.y );
 ```
+
+[![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
 ❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
 ###subzero.deepFreezeObject( objectToFreeze )
