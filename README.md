@@ -3,8 +3,8 @@
 [![mk.gif](https://s23.postimg.org/ov0dy35hn/image.gif)](https://postimg.org/image/4nmy5s807/)
 
 ##About:
-Freeze a class and its prototype, or freeze an object.
-
+Freeze a class and its prototype, or freeze an object. Note: coming soon, subzero.megaFreezeClass and subzero.megaFreezeObject🐉
+`
 ##install:
 
 ```
