@@ -231,7 +231,7 @@ subzero.deepFreezeObject( o );
 
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
-###4) subzero.megaFreezeClass( objectToFreeze )
+###4) subzero.megaFreezeClass( ClassToFreeze )
 
 Deep freeze a class (or a function). This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `* MEGA FREEZE CORNER CASE`.
 
