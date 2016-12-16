@@ -13,7 +13,7 @@ npm install subzero
 
 ##usage:
 
-###subzero.freezeClass
+###subzero.freezeClass( ClassToFreeze )
 Freeze a class and its prototype
 
 ```.js
@@ -53,7 +53,7 @@ subzero.freezeClass( C );
 
 [![letitgo.gif](https://s27.postimg.org/gym5t7iib/letitgo.gif)](https://postimg.org/image/ptn03q7an/)
 
-###subzero.deepFreezeClass
+###subzero.deepFreezeClass( ClassToFreeze )
 Deep freeze a class and its prototype. This will **not** freeze any classes within the class. It works by recursively freezing anything of type `"object"`.
 
 ```.js
@@ -116,7 +116,7 @@ subzero.deepFreezeClass( C );
 ```
 
 ❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
-###subzero.deepFreezeObject
+###subzero.deepFreezeObject( objectToFreeze )
 
 Deep freeze an object. This will **not** freeze any classes within the object. It works by recursively freezing anything of type `"object"`.
 
