@@ -4,7 +4,7 @@
 
 ##About:
 
-Freeze a class, freeze a function, or freeze an object.
+Freeze a class, freeze a function, or freeze an object. Note: v4 coming soon, non function/object/class input will be treated as a no-op instead of throwing an error.
 
 ##install:
 
