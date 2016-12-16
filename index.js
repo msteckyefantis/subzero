@@ -52,7 +52,7 @@ const deepFreeze = Object.freeze( function( objectOrClass ) {
 
         const property = objectOrClass[ propertyName ];
 
-        if(  objectOrClass.hasOwnProperty( propertyName ) &&
+        if( objectOrClass.hasOwnProperty( propertyName ) &&
 
             (typeof property === OBJECT ) &&
 
