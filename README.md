@@ -166,7 +166,7 @@ Deep freeze a class, object, or function and its prototype. This **will** freeze
 'use strict';
 
 /*
-	this example uses an function, subzero.deepFreeze also works
+	this example uses an function, subzero.megaFreeze also works
 	with objects and classes
 */
 function f() {}
@@ -218,7 +218,7 @@ f.prototype.x = {
     w: {}
 };
 
-const reference = subzero.megaFreezeClass( f );
+const reference = subzero.megaFreeze( f );
 
 /*
 	the following statements will now return true:
