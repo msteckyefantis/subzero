@@ -107,7 +107,7 @@ C.a = {
                 InnerClass,
 
                 InnerFunction,
-                
+
                 e: Object.freeze({ willBeFrozen })
             }
         }
@@ -188,7 +188,7 @@ o.a = {
                 InnerClass,
 
                 InnerFunction,
-                
+
                 e: Object.freeze({ willBeFrozen })
             }
         }
@@ -341,17 +341,17 @@ o.a = {
 
     b: {
 
-	c: {
+    	c: {
 
-	    d: {
+    	    d: {
 
-		InnerClass,
+        		InnerClass,
 
-		controlFunction,
+                controlFunction,
 
-		e: Object.freeze( { wontBeFrozen } )
-	    }
-	}
+    		    e: Object.freeze( { wontBeFrozen } )
+    	    }
+    	}
     }
 };
 
@@ -359,7 +359,7 @@ o.x = {
 
     y: {
 
-	z: {}
+	       z: {}
     },
 
     w: {}
