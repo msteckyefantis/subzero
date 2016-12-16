@@ -50,7 +50,7 @@ subzero.freezeClass( C );
 // Object.isFrozen( C.prototype );
 
 /*
-	and the following statements will now throw TypeErrors in strict mode:
+	as a result the following statements will now throw TypeErrors in strict mode:
 */
 
 // C.g = function() { return 42 };
