@@ -23,7 +23,11 @@ npm install subzero
 4. [subzero.megaFreezeClass](#4-subzeromegafreezeclass-objecttofreeze-)
 5. [subzero.megaFreezeObject](#5-subzeromegafreezeobject-objecttofreeze-)
 
+
+#######Note: the mega freeze functions were inspired by [deep-freeze](https://github.com/substack/deep-freeze).
 <br>
+
+
 
 ###1) subzero.freezeClass( ClassToFreeze )
 Freeze a class and its prototype.
@@ -228,7 +232,7 @@ subzero.deepFreezeObject( o );
 
 ###4) subzero.megaFreezeClass( objectToFreeze )
 
-Deep freeze an object. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`. Note the `MEGA FREEZE CORNER CASE *`.
+Deep freeze an object. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `MEGA FREEZE CORNER CASE *`.
 
 ```.js
 'use strict';
@@ -308,7 +312,7 @@ C.prototype.x = {
 
 ###5) subzero.megaFreezeObject( objectToFreeze )
 
-Deep freeze an object. This **will** freeze any classes, functions, and objects within the object. It works by recursively freezing anything of type `"object"` or `"function"`. Note the `MEGA FREEZE CORNER CASE *`.
+Deep freeze an object. This **will** freeze any classes, functions, and objects within the object. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `MEGA FREEZE CORNER CASE *`.
 
 ```.js
 'use strict';
