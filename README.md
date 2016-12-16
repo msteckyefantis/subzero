@@ -237,14 +237,14 @@ class C {};
 
 class InnerClass {};
 
-const controlFunction = function() {};
-
-controlFunction.x = {
+InnerClass.x = {
 
     y: {}
 };
 
-InnerClass.x = {
+const controlFunction = function() {};
+
+controlFunction.x = {
 
     y: {}
 };
@@ -317,14 +317,14 @@ class C {};
 
 class InnerClass {};
 
-const controlFunction = function() {};
-
-controlFunction.x = {
+InnerClass.x = {
 
     y: {}
 };
 
-InnerClass.x = {
+const controlFunction = function() {};
+
+controlFunction.x = {
 
     y: {}
 };
