@@ -173,9 +173,13 @@ describe( MODULE_PATH, function() {
                         expect( Object.isFrozen( subzeroVariableToValidate.a.b.c ) ).to.equal( functionData.innerObjectsWillBeFrozen );
                         expect( Object.isFrozen( subzeroVariableToValidate.a.b.c.d ) ).to.equal( functionData.innerObjectsWillBeFrozen );
 
-                        if( subzeroVariableData.type !== 'object' ) {
+                        if( !((subzeroVariableData.type === 'object') && (functionData.name === 'freeze')) ) {
 
                             expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ] ) ).to.be.true;
+                        }
+                        else {
+
+                            expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ] ) ).to.be.false;
                         }
 
                         expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x ) ).to.equal( functionData.innerObjectsWillBeFrozen );
