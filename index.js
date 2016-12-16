@@ -46,7 +46,7 @@ const subzero = {
 };
 
 
-function deepFreezeObject( object ) {
+const deepFreezeObject = Object.freeze( function( object ) {
     /* NOTE: does accept a class too,
         but will not recursively freeze a class within a class/object
     */
@@ -67,10 +67,10 @@ function deepFreezeObject( object ) {
     }
 
     return Object.freeze( object )
-}
+});
 
 
-function megaFreezeObject( object ) {
+const megaFreezeObject = Object.freeze( function( object ) {
 
     Object.freeze( object );
 
@@ -92,25 +92,25 @@ function megaFreezeObject( object ) {
     }
 
     return object;
-}
+});
 
 
-function validateClass( classToFreeze ) {
+const validateClass = Object.freeze( function( classToFreeze ) {
 
     if( typeof classToFreeze !== FUNCTION ) {
 
         throw new TypeError( 'subzero error: invalid class' );
     }
-}
+});
 
 
-function validateObject( objectToFreeze ) {
+const validateObject = Object.freeze( function( objectToFreeze ) {
 
     if( typeof objectToFreeze !== OBJECT ) {
 
         throw new TypeError( 'subzero error: invalid object' );
     }
-}
+});
 
 
 module.exports = subzero.megaFreezeObject( subzero );
