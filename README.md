@@ -21,7 +21,7 @@ npm install subzero
 2. [subzero.deepFreezeClass](#2-subzerodeepfreezeclass-classtofreeze-)
 3. [subzero.deepFreezeObject](#3-subzerodeepfreezeobject-objecttofreeze-)
 4. [subzero.megaFreezeClass](#4-subzeromegafreezeclass-objecttofreeze-)
-5. [subzero.megaFreezeObject](#5-subzeromegafreezeclass-objecttofreeze-)
+5. [subzero.megaFreezeObject](#5-subzeromegafreezeobject-objecttofreeze-)
 
 <br>
 
