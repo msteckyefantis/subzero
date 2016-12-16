@@ -5,81 +5,81 @@ const OBJECT = 'object';
 const FUNCTION = 'function';
 
 
+// NOTE: the subzeroVariable can be an object, a function, or a class
 const subzero = {
 
-    freezeClass( classToFreeze ) {
+    freeze( subzeroVariable ) {
 
-        validateClass( classToFreeze );
+        validateSubzeroVariable( subzeroVariable );
 
-        Object.freeze( classToFreeze.prototype );
-
-        return Object.freeze( classToFreeze );
+        return freeze( subzeroVariable );
     },
 
-    deepFreezeClass( classToFreeze ) {
+    deepFreeze( subzeroVariable ) {
 
-        validateClass( classToFreeze );
+        validateSubzeroVariable( subzeroVariable );
 
-        return deepFreeze( classToFreeze );
+        return deepFreeze( subzeroVariable );
     },
 
-    deepFreezeObject( objectToFreeze ) {
+    megaFreeze( classToFreeze ) {
 
-        validateObject( objectToFreeze );
-
-        return deepFreeze( objectToFreeze );
-    },
-
-    megaFreezeClass( classToFreeze ) {
-
-        validateClass( classToFreeze );
+        validateSubzeroVariable( classToFreeze );
 
         return megaFreeze( classToFreeze );
-    },
-
-    megaFreezeObject( objectToFreeze ) {
-
-        validateObject( objectToFreeze );
-
-        return megaFreeze( objectToFreeze );
     }
 };
 
 
-const deepFreeze = Object.freeze( function( objectOrClass ) {
+const freeze = Object.freeze( function( subzeroVariable ) {
 
-    for( const propertyName of Object.getOwnPropertyNames( objectOrClass ) ) {
+    const prototype = subzeroVariable.prototype;
 
-        const property = objectOrClass[ propertyName ];
+    if( prototype ) {
 
-        if( objectOrClass.hasOwnProperty( propertyName ) &&
+        Object.freeze( prototype );
+    }
 
-            (typeof property === OBJECT ) &&
+    return Object.freeze( subzeroVariable );
+});
 
-            (property !== null)
+
+const deepFreeze = Object.freeze( function( subzeroVariable ) {
+
+    for( const propertyName of Object.getOwnPropertyNames( subzeroVariable ) ) {
+
+        const property = subzeroVariable[ propertyName ];
+
+        if( subzeroVariable.hasOwnProperty( propertyName ) &&
+
+            ( property !== null ) &&
+
+            ( typeof property === OBJECT )
         ) {
 
             deepFreeze( property );
         }
     }
 
-    return Object.freeze( objectOrClass )
+    return Object.freeze( subzeroVariable );
 });
 
 
-const megaFreeze = Object.freeze( function( objectOrClass ) {
+const megaFreeze = Object.freeze( function( subzeroVariable ) {
 
-    Object.freeze( objectOrClass );
+    Object.freeze( subzeroVariable );
 
-    for( const propertyName of Object.getOwnPropertyNames( objectOrClass ) ) {
+    for( const propertyName of Object.getOwnPropertyNames( subzeroVariable ) ) {
 
-        const property = objectOrClass[ propertyName ];
+        const property = subzeroVariable[ propertyName ];
 
-        if( objectOrClass.hasOwnProperty( propertyName ) &&
+        const subzeroVariableIsAFunctionOrAClass = ( typeof property === FUNCTION );
 
-            (typeof property === OBJECT || typeof property === FUNCTION) &&
+        const subzeroVariableIsAnObject =  ( (property !== null) && (typeof property === OBJECT) );
 
-            (property !== null) &&
+        if( subzeroVariable.hasOwnProperty( propertyName ) &&
+
+            ( subzeroVariableIsAFunctionOrAClass || subzeroVariableIsAnObject ) &&
 
             !Object.isFrozen( property )
         ) {
@@ -88,26 +88,25 @@ const megaFreeze = Object.freeze( function( objectOrClass ) {
         }
     }
 
-    return objectOrClass;
+
+    return subzeroVariable;
 });
 
 
-const validateClass = Object.freeze( function( classToFreeze ) {
+const validateSubzeroVariable = Object.freeze( function( subzeroVariable ) {
 
-    if( typeof classToFreeze !== FUNCTION ) {
+    const subzeroVariableIsValid = (
 
-        throw new TypeError( 'subzero error: invalid class' );
+        ( typeof subzeroVariable === FUNCTION ) ||
+
+        ( (subzeroVariable !== null) && (typeof subzeroVariable === OBJECT) )
+    );
+
+    if( !subzeroVariableIsValid ) {
+
+        throw new TypeError( 'subzero error: input must be an object, function, or class' );
     }
 });
 
 
-const validateObject = Object.freeze( function( objectToFreeze ) {
-
-    if( (typeof objectToFreeze !== OBJECT) || (objectToFreeze === null) ) {
-
-        throw new TypeError( 'subzero error: invalid object' );
-    }
-});
-
-
-module.exports = subzero.megaFreezeObject( subzero );
+module.exports = subzero.megaFreeze( subzero );

@@ -4,7 +4,7 @@
 
 ##About:
 
-Freeze a class and its prototype, or freeze an object. Note: v3 coming soon, with just the three following functions `subzero.freeze, subzero.deepFreeze, and subzero.megaFreeze`.
+Freeze a class and its prototype, or freeze an object.
 
 ##install:
 
@@ -16,27 +16,28 @@ npm install subzero
 
 ####function list (each function explained in more detail below):
 
-1. [subzero.freezeClass](#1-subzerofreezeclass-classtofreeze-)
-2. [subzero.deepFreezeClass](#2-subzerodeepfreezeclass-classtofreeze-)
-3. [subzero.deepFreezeObject](#3-subzerodeepfreezeobject-objecttofreeze-)
-4. [subzero.megaFreezeClass](#4-subzeromegafreezeclass-objecttofreeze-)
-5. [subzero.megaFreezeObject](#5-subzeromegafreezeobject-objecttofreeze-)
+1. [subzero.freeze]()
+2. [subzero.deepFreeze]()
+3. [subzero.megaFreeze]()
 
-
->Note: the mega freeze functions were inspired by [deep-freeze](https://github.com/substack/deep-freeze).
+>Note: the deep freeze function was inspired by [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze). The mega freeze function was inspired by [deep-freeze](https://github.com/substack/deep-freeze).
 
 <br>
 
 
 
-###1) subzero.freezeClass( ClassToFreeze )
-Freeze a class (or a function) and its prototype.
+###1) subzero.freeze( functionOrClassOrObjectToFreeze )
+Freeze a class or function and its prototype. For object input, it acts the exact same way as Object.freeze.
 
 ```.js
 'use strict';
 
 const subzero = require( 'subzero' );
 
+/*
+	this example uses a class, subzero.freeze also works
+	with objects and functions
+*/
 class C {
 
 	static f() { return 69; }
@@ -44,12 +45,14 @@ class C {
 	f() { return 22; }
 }
 
-subzero.freezeClass( C );
+const reference = subzero.freeze( C );
+
 
 /*
 	the following statements will now return true:
 */
 
+// ( reference === C );
 // Object.isFrozen( C );
 // Object.isFrozen( C.prototype );
 
@@ -69,95 +72,19 @@ subzero.freezeClass( C );
 
 [![letitgo.gif](https://s27.postimg.org/gym5t7iib/letitgo.gif)](https://postimg.org/image/ptn03q7an/)
 
-###2) subzero.deepFreezeClass( ClassToFreeze )
-Deep freeze a class (or a function) and its prototype. This will **not** freeze any classes or functions within the class. It works by recursively freezing anything of type `"object"`.
+❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
+###2) subzero.deepFreeze( functionOrClassOrObjectToFreeze )
+Deep freeze a class, object, or function (and its prototype for classes/functions). This will **not** freeze any classes or functions within the input object/function/class. It works by recursively freezing anything of type `"object"`.
 
 ```.js
 'use strict';
 
 const subzero = require( 'subzero' );
-
-class C {}
-
-class InnerClass {}
-
-InnerClass.x = {
-
-    y: {}
-};
-
-function InnerFunction() {}
-
-InnerFunction.x = {
-
-    y: {}
-};
-
-const willBeFrozen = {};
-
-C.a = {
-
-    b: {
-
-        c: {
-
-            d: {
-
-                InnerClass,
-
-                InnerFunction,
-
-                e: Object.freeze({ willBeFrozen })
-            }
-        }
-    }
-};
-
-C.prototype.x = {
-
-    y: {
-
-        z: {}
-    },
-
-    w: {}
-};
-
-subzero.deepFreezeClass( C );
 
 /*
-	the following statements will now return true:
+	this example uses an object, subzero.deepFreeze also works
+	with functions and classes
 */
-
-// Object.isFrozen( C );
-// Object.isFrozen( C.a );
-// Object.isFrozen( C.a.b );
-// Object.isFrozen( C.a.b.c );
-// Object.isFrozen( C.a.b.c.d );
-// Object.isFrozen( C.prototype );
-// Object.isFrozen( C.prototype.x );
-// Object.isFrozen( C.prototype.x.y );
-// Object.isFrozen( C.prototype.x.y.z );
-// Object.isFrozen( C.prototype.x.w );
-// !Object.isFrozen( InnerClass );
-// !Object.isFrozen( InnerClass.x );
-// !Object.isFrozen( InnerClass.x.y );
-// !Object.isFrozen( InnerFunction );
-// !Object.isFrozen( InnerFunction.x );
-// !Object.isFrozen( InnerFunction.x.y );
-// Object.isFrozen( C.a.b.c.d.e.willBeFrozen );
-```
-
-❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
-###3) subzero.deepFreezeObject( objectToFreeze )
-
-Deep freeze an object. This will **not** freeze any classes or functions within the object. It works by recursively freezing anything of type `"object"`.
-
-```.js
-'use strict';
-
-const subzero = require( 'subzero' );
-
 const o = {};
 
 class InnerClass {}
@@ -204,12 +131,13 @@ o.x = {
     w: {}
 };
 
-subzero.deepFreezeObject( o );
+const reference = subzero.deepFreeze( o );
 
 /*
 	the following statements will now return true:
 */
 
+// ( reference === o );
 // Object.isFrozen( o );
 // Object.isFrozen( o.a );
 // Object.isFrozen( o.a.b );
@@ -225,19 +153,23 @@ subzero.deepFreezeObject( o );
 // !Object.isFrozen( InnerFunction );
 // !Object.isFrozen( InnerFunction.x );
 // !Object.isFrozen( InnerFunction.x.y );
-// Object.isFrozen( o.a.b.c.d.e.willBeFrozen );
+// Object.isFrozen( willBeFrozen );
 ```
 
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
-###4) subzero.megaFreezeClass( ClassToFreeze )
 
-Deep freeze a class (or a function). This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `* MEGA FREEZE CORNER CASE`.
+###3) subzero.megaFreeze( functionOrClassOrObjectToFreeze )
+Deep freeze a class, object, or function and its prototype. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `* MEGA FREEZE CORNER CASE`.
 
 ```.js
 'use strict';
 
-class C {};
+/*
+	this example uses an function, subzero.deepFreeze also works
+	with objects and classes
+*/
+function f() {}
 
 class InnerClass {};
 
@@ -254,11 +186,11 @@ controlFunction.x = {
 };
 
 /* MEGA FREEZE CORNER CASE:
-	be careful about objects and functions within already frozen objects and functions
+	be careful about objects/functions within already frozen objects and functions
 */
 const wontBeFrozen = {};
 
-C.a = {
+f.a = {
 
     b: {
 
@@ -276,7 +208,7 @@ C.a = {
     }
 };
 
-C.prototype.x = {
+f.prototype.x = {
 
     y: {
 
@@ -286,109 +218,30 @@ C.prototype.x = {
     w: {}
 };
 
-subzero.megaFreezeClass( C );
+const reference = subzero.megaFreezeClass( f );
 
 /*
 	the following statements will now return true:
 */
 
-// Object.isFrozen( C );
-// Object.isFrozen( C.a );
-// Object.isFrozen( C.a.b );
-// Object.isFrozen( C.a.b.c );
-// Object.isFrozen( C.a.b.c.d );
-// Object.isFrozen( C.prototype );
-// Object.isFrozen( C.prototype.x );
-// Object.isFrozen( C.prototype.x.y );
-// Object.isFrozen( C.prototype.x.y.z );
-// Object.isFrozen( C.prototype.x.w );
+// ( reference === f );
+// Object.isFrozen( f );
+// Object.isFrozen( f.a );
+// Object.isFrozen( f.a.b );
+// Object.isFrozen( f.a.b.c );
+// Object.isFrozen( f.a.b.c.d );
+// Object.isFrozen( f.prototype );
+// Object.isFrozen( f.prototype.x );
+// Object.isFrozen( f.prototype.x.y );
+// Object.isFrozen( f.prototype.x.y.z );
+// Object.isFrozen( f.prototype.x.w );
 // Object.isFrozen( InnerClass );
 // Object.isFrozen( InnerClass.x );
 // Object.isFrozen( InnerClass.x.y );
 // Object.isFrozen( controlFunction );
 // Object.isFrozen( controlFunction.x );
 // Object.isFrozen( controlFunction.x.y );
-// !Object.isFrozen( C.a.b.c.d.e.wontBeFrozen );
+// !Object.isFrozen( wontBeFrozen );
 ```
 
 [![frieza22.gif](https://s23.postimg.org/d6ri2wwm3/frieza22.gif)](https://postimg.org/image/djiw93evr/)
-
-###5) subzero.megaFreezeObject( objectToFreeze )
-
-Deep freeze an object. This **will** freeze any classes, functions, and objects within the object. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `* MEGA FREEZE CORNER CASE`.
-
-```.js
-'use strict';
-
-const o =  {};
-
-const InnerClass = class {};
-
-InnerClass.x = {
-
-    y: {}
-};
-
-const controlFunction = function() {};
-
-controlFunction.x = {
-
-    y: {}
-};
-
-/* MEGA FREEZE CORNER CASE:
-	be careful about objects and functions within already frozen objects and functions
-*/
-const wontBeFrozen = {};
-
-o.a = {
-
-    b: {
-
-    	c: {
-
-    	    d: {
-
-        		InnerClass,
-
-                controlFunction,
-
-    		    e: Object.freeze( { wontBeFrozen } )
-    	    }
-    	}
-    }
-};
-
-o.x = {
-
-    y: {
-
-	       z: {}
-    },
-
-    w: {}
-};
-
-subzero.megaFreezeObject( o );
-
-/*
-	the following statements will now return true:
-*/
-
-// Object.isFrozen( o );
-// Object.isFrozen( o.a );
-// Object.isFrozen( o.a.b );
-// Object.isFrozen( o.a.b.c );
-// Object.isFrozen( o.a.b.c.d );
-// Object.isFrozen( o.x );
-// Object.isFrozen( o.x.y );
-// Object.isFrozen( o.x.y.z );
-// Object.isFrozen( o.x.w );
-// Object.isFrozen( InnerClass );
-// Object.isFrozen( InnerClass.x );
-// Object.isFrozen( InnerClass.x.y );
-// Object.isFrozen( controlFunction );
-// Object.isFrozen( controlFunction.x );
-// Object.isFrozen( controlFunction.x.y );
-// !Object.isFrozen( o.a.b.c.d.e.wontBeFrozen );
-```
