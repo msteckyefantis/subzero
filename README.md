@@ -1,4 +1,4 @@
-#subzero
+#subzero [![npm version](https://badge.fury.io/js/subzero.svg)](https://badge.fury.io/js/subzero) [![Build Status](https://travis-ci.org/msteckyefantis/subzero.svg?branch=master)](https://travis-ci.org/msteckyefantis/subzero)
 
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
@@ -113,7 +113,6 @@ subzero.deepFreezeClass( C );
 // !Object.isFrozen( InnerClass );
 // !Object.isFrozen( InnerClass.x );
 // !Object.isFrozen( InnerClass.x.y );
-
 ```
 
 ❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
