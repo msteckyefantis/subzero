@@ -21,11 +21,11 @@ const subzero = {
         return deepFreeze( subzeroVariable );
     },
 
-    megaFreeze( classToFreeze ) {
+    megaFreeze( subzeroVariable ) {
 
-        validateSubzeroVariable( classToFreeze );
+        validateSubzeroVariable( subzeroVariable );
 
-        return megaFreeze( classToFreeze );
+        return megaFreeze( subzeroVariable );
     }
 };
 
