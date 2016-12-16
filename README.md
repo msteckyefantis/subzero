@@ -178,9 +178,9 @@ InnerClass.x = {
     y: {}
 };
 
-const controlFunction = function() {};
+const innerFunction = function() {};
 
-controlFunction.x = {
+innerFunction.x = {
 
     y: {}
 };
@@ -200,7 +200,7 @@ f.a = {
 
                 InnerClass,
 
-                controlFunction,
+                innerFunction,
 
                 e: Object.freeze({ wontBeFrozen })
             }
@@ -238,9 +238,9 @@ const reference = subzero.megaFreeze( f );
 // Object.isFrozen( InnerClass );
 // Object.isFrozen( InnerClass.x );
 // Object.isFrozen( InnerClass.x.y );
-// Object.isFrozen( controlFunction );
-// Object.isFrozen( controlFunction.x );
-// Object.isFrozen( controlFunction.x.y );
+// Object.isFrozen( innerFunction );
+// Object.isFrozen( innerFunction.x );
+// Object.isFrozen( innerFunction.x.y );
 // !Object.isFrozen( wontBeFrozen );
 ```
 
