@@ -20,65 +20,62 @@ const subzero = {
 
         validateClass( classToFreeze );
 
-        return deepFreezeObject( classToFreeze );
+        return deepFreeze( classToFreeze );
     },
 
     deepFreezeObject( objectToFreeze ) {
 
         validateObject( objectToFreeze );
 
-        return deepFreezeObject( objectToFreeze );
+        return deepFreeze( objectToFreeze );
     },
 
     megaFreezeClass( classToFreeze ) {
 
         validateClass( classToFreeze );
 
-        return megaFreezeObject( classToFreeze );
+        return megaFreeze( classToFreeze );
     },
 
     megaFreezeObject( objectToFreeze ) {
 
         validateObject( objectToFreeze );
 
-        return megaFreezeObject( objectToFreeze );
+        return megaFreeze( objectToFreeze );
     }
 };
 
 
-const deepFreezeObject = Object.freeze( function( object ) {
-    /* NOTE: does accept a class too,
-        but will not recursively freeze a class within a class/object
-    */
+const deepFreeze = Object.freeze( function( objectOrClass ) {
 
-    for( let propertyName of Object.getOwnPropertyNames( object ) ) {
+    for( let propertyName of Object.getOwnPropertyNames( objectOrClass ) ) {
 
-        const property = object[ propertyName ];
+        const property = objectOrClass[ propertyName ];
 
-        if(  object.hasOwnProperty( propertyName ) &&
+        if(  objectOrClass.hasOwnProperty( propertyName ) &&
 
             (typeof property === OBJECT ) &&
 
             (property !== null)
         ) {
 
-            deepFreezeObject( property );
+            deepFreeze( property );
         }
     }
 
-    return Object.freeze( object )
+    return Object.freeze( objectOrClass )
 });
 
 
-const megaFreezeObject = Object.freeze( function( object ) {
+const megaFreeze = Object.freeze( function( objectOrClass ) {
 
-    Object.freeze( object );
+    Object.freeze( objectOrClass );
 
-    for( let propertyName of Object.getOwnPropertyNames( object ) ) {
+    for( let propertyName of Object.getOwnPropertyNames( objectOrClass ) ) {
 
-        const property = object[ propertyName ];
+        const property = objectOrClass[ propertyName ];
 
-        if( object.hasOwnProperty( propertyName ) &&
+        if( objectOrClass.hasOwnProperty( propertyName ) &&
 
             (typeof property === OBJECT || typeof property === FUNCTION) &&
 
@@ -87,11 +84,11 @@ const megaFreezeObject = Object.freeze( function( object ) {
             !Object.isFrozen( property )
         ) {
 
-            megaFreezeObject( property );
+            megaFreeze( property );
         }
     }
 
-    return object;
+    return objectOrClass;
 });
 
 
@@ -106,7 +103,7 @@ const validateClass = Object.freeze( function( classToFreeze ) {
 
 const validateObject = Object.freeze( function( objectToFreeze ) {
 
-    if( typeof objectToFreeze !== OBJECT ) {
+    if( (typeof objectToFreeze !== OBJECT) || (objectToFreeze === null) ) {
 
         throw new TypeError( 'subzero error: invalid object' );
     }
