@@ -5,7 +5,7 @@ const OBJECT = 'object';
 const FUNCTION = 'function';
 
 
-module.exports = Object.freeze({
+const subzero = {
 
     freezeClass( classToFreeze ) {
 
@@ -28,8 +28,22 @@ module.exports = Object.freeze({
         validateObject( objectToFreeze );
 
         return deepFreezeObject( objectToFreeze );
+    },
+
+    megaFreezeClass( classToFreeze ) {
+
+        validateClass( classToFreeze );
+
+        return megaFreezeObject( classToFreeze );
+    },
+
+    megaFreezeObject( objectToFreeze ) {
+
+        validateObject( objectToFreeze );
+
+        return megaFreezeObject( objectToFreeze );
     }
-});
+};
 
 
 function deepFreezeObject( object ) {
@@ -41,13 +55,41 @@ function deepFreezeObject( object ) {
 
         const property = object[ propertyName ];
 
-        if( (typeof property === OBJECT) && (property !== null) ) {
+        if(  object.hasOwnProperty( propertyName ) &&
+            (typeof property === OBJECT ) &&
+            (property !== null)
+        ) {
 
             deepFreezeObject( property );
         }
     }
 
     return Object.freeze( object )
+}
+
+
+function megaFreezeObject( object ) {
+
+    Object.freeze( object );
+
+    for( let propertyName of Object.getOwnPropertyNames( object ) ) {
+
+        const property = object[ propertyName ];
+
+        if( object.hasOwnProperty( propertyName ) &&
+
+            (object[ propertyName ] !== null) &&
+
+            (typeof property === OBJECT || typeof property === FUNCTION) &&
+
+            !Object.isFrozen( property )
+        ) {
+
+          megaFreezeObject( property );
+        }
+    }
+
+    return object;
 }
 
 
@@ -67,3 +109,6 @@ function validateObject( objectToFreeze ) {
         throw new TypeError( 'subzero error: invalid object' );
     }
 }
+
+
+module.exports = subzero.megaFreezeObject( subzero );

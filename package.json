@@ -1,6 +1,6 @@
 {
   "name": "subzero",
-  "version": "1.0.15",
+  "version": "2.0.0",
   "description": "class and object freezer",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,10 @@
     "immutability",
     "immutable",
     "freeze",
+    "zero",
+    "sub",
+    "subzero",
+    "sub-zero",
     "deep",
     "kombat",
     "mortal",
