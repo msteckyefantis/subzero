@@ -1,7 +1,5 @@
 #subzero
 
-[![subzero-mortal-kombat.gif](https://s23.postimg.org/y3g3ohyez/subzero_mortal_kombat.gif)](https://postimg.org/image/dw2nw70xj/)
-
 ##About:
 Freeze a class and its prototype, or freeze an object.
 
