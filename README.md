@@ -94,9 +94,9 @@ InnerClass.x = {
     y: {}
 };
 
-function InnerFunction() {}
+function innerFunction() {}
 
-InnerFunction.x = {
+innerFunction.x = {
 
     y: {}
 };
@@ -113,7 +113,7 @@ o.a = {
 
                 InnerClass,
 
-                InnerFunction,
+                innerFunction,
 
                 e: Object.freeze({ willBeFrozen })
             }
@@ -150,9 +150,9 @@ const reference = subzero.deepFreeze( o );
 // !Object.isFrozen( InnerClass );
 // !Object.isFrozen( InnerClass.x );
 // !Object.isFrozen( InnerClass.x.y );
-// !Object.isFrozen( InnerFunction );
-// !Object.isFrozen( InnerFunction.x );
-// !Object.isFrozen( InnerFunction.x.y );
+// !Object.isFrozen( innerFunction );
+// !Object.isFrozen( innerFunction.x );
+// !Object.isFrozen( innerFunction.x.y );
 // Object.isFrozen( willBeFrozen );
 ```
 
