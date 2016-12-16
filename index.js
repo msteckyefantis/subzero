@@ -48,7 +48,7 @@ const subzero = {
 
 const deepFreeze = Object.freeze( function( objectOrClass ) {
 
-    for( let propertyName of Object.getOwnPropertyNames( objectOrClass ) ) {
+    for( const propertyName of Object.getOwnPropertyNames( objectOrClass ) ) {
 
         const property = objectOrClass[ propertyName ];
 
@@ -71,7 +71,7 @@ const megaFreeze = Object.freeze( function( objectOrClass ) {
 
     Object.freeze( objectOrClass );
 
-    for( let propertyName of Object.getOwnPropertyNames( objectOrClass ) ) {
+    for( const propertyName of Object.getOwnPropertyNames( objectOrClass ) ) {
 
         const property = objectOrClass[ propertyName ];
 
