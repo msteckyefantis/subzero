@@ -16,9 +16,9 @@ npm install subzero
 
 ####function list (each function explained in more detail below):
 
-1. [subzero.freeze]()
-2. [subzero.deepFreeze]()
-3. [subzero.megaFreeze]()
+1. [subzero.freeze](#1-subzerofreeze-functionorclassorobjecttofreeze-)
+2. [subzero.deepFreeze](#2-subzerodeepfreeze-functionorclassorobjecttofreeze-)
+3. [subzero.megaFreeze](#3-subzeromegafreeze-functionorclassorobjecttofreeze-)
 
 >Note: the deep freeze function was inspired by [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze). The mega freeze function was inspired by [deep-freeze](https://github.com/substack/deep-freeze).
 
