@@ -249,7 +249,7 @@ controlFunction.x = {
     y: {}
 };
 
-// * MEGA FREEZE CORNER CASE: be careful about objects within already frozen objects
+// * MEGA FREEZE CORNER CASE: be careful about objects within already frozen objects or functions
 const wontBeFrozen = {};
 
 C.a = {
@@ -329,7 +329,7 @@ controlFunction.x = {
     y: {}
 };
 
-// MEGA FREEZE CORNER CASE *: be careful about objects within already frozen objects
+// MEGA FREEZE CORNER CASE *: be careful about objects within already frozen objects or functions
 const wontBeFrozen = {};
 
 C.a = {
