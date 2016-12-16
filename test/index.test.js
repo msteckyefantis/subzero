@@ -54,6 +54,44 @@ describe( MODULE_PATH, function() {
             });
         });
 
+        describe( '.freezeClass (tested on function)', function() {
+
+            it( 'failed init: invalid function', function() {
+
+                const controlFunction = 69;
+
+                let erroredAsExpected = false;
+
+                try {
+
+                    subzero.freezeClass( controlFunction );
+                }
+                catch( err ) {
+
+                    if( err instanceof TypeError ) {
+
+                        expect( err.message ).to.equal( 'subzero error: invalid class' );
+
+                        erroredAsExpected = true;
+                    }
+                }
+                finally {
+
+                    expect( erroredAsExpected ).to.be.true;
+                }
+            });
+
+            it( 'normal operation', function() {
+
+                const controlFunction = function() {};
+
+                expect( subzero.freezeClass( controlFunction ) ).to.equal( controlFunction );
+
+                expect( Object.isFrozen( controlFunction ) ).to.be.true;
+                expect( Object.isFrozen( controlFunction.prototype ) ).to.be.true;
+            });
+        });
+
         describe( '.deepFreezeClass', function() {
 
             it( 'failed init: invalid class', function() {
@@ -148,6 +186,103 @@ describe( MODULE_PATH, function() {
                 expect( Object.isFrozen( controlFunction.x ) ).to.be.false;
                 expect( Object.isFrozen( controlFunction.x.y ) ).to.be.false;
                 expect( Object.isFrozen( C.a.b.c.d.e.willBeFrozen ) ).to.be.true;
+            });
+        });
+
+        describe( '.deepFreezeClass (tested on a function)', function() {
+
+            it( 'failed init: invalid function', function() {
+
+                const controlFunction = 69;
+
+                let erroredAsExpected = false;
+
+                try {
+
+                    subzero.deepFreezeClass( controlFunction );
+                }
+                catch( err ) {
+
+                    if( err instanceof TypeError ) {
+
+                        expect( err.message ).to.equal( 'subzero error: invalid class' );
+
+                        erroredAsExpected = true;
+                    }
+                }
+                finally {
+
+                    expect( erroredAsExpected ).to.be.true;
+                }
+            });
+
+            it( 'normal operation', function() {
+
+                const controlFunctionToFreeze = function() {};
+
+                const InnerClass = class {};
+
+                InnerClass.x = {
+
+                    y: {}
+                };
+
+                const controlFunction = function() {};
+
+                controlFunction.x = {
+
+                    y: {}
+                };
+
+                const willBeFrozen = {};
+
+                controlFunctionToFreeze.a = {
+
+                    b: {
+
+                        c: {
+
+                            d: {
+
+                                InnerClass,
+
+                                controlFunction,
+
+                                e: Object.freeze({ willBeFrozen })
+                            }
+                        }
+                    }
+                };
+
+                controlFunctionToFreeze.prototype.x = {
+
+                    y: {
+
+                        z: {}
+                    },
+
+                    w: {}
+                };
+
+                expect( subzero.deepFreezeClass( controlFunctionToFreeze ) ).to.equal( controlFunctionToFreeze );
+
+                expect( Object.isFrozen( controlFunctionToFreeze ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.a ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.a.b ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.a.b.c ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.a.b.c.d ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.prototype ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.prototype.x ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.prototype.x.y ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.prototype.x.y.z ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.prototype.x.w ) ).to.be.true;
+                expect( Object.isFrozen( InnerClass ) ).to.be.false;
+                expect( Object.isFrozen( InnerClass.x ) ).to.be.false;
+                expect( Object.isFrozen( InnerClass.x.y ) ).to.be.false;
+                expect( Object.isFrozen( controlFunction ) ).to.be.false;
+                expect( Object.isFrozen( controlFunction.x ) ).to.be.false;
+                expect( Object.isFrozen( controlFunction.x.y ) ).to.be.false;
+                expect( Object.isFrozen( controlFunctionToFreeze.a.b.c.d.e.willBeFrozen ) ).to.be.true;
             });
         });
 
@@ -257,13 +392,13 @@ describe( MODULE_PATH, function() {
 
                 try {
 
-                    subzero.deepFreezeObject( controlObject );
+                    subzero.megaFreezeClass( controlObject );
                 }
                 catch( err ) {
 
                     if( err instanceof TypeError ) {
 
-                        expect( err.message ).to.equal( 'subzero error: invalid object' );
+                        expect( err.message ).to.equal( 'subzero error: invalid class' );
 
                         erroredAsExpected = true;
                     }
@@ -345,6 +480,103 @@ describe( MODULE_PATH, function() {
             });
         });
 
+        describe( '.megaFreezeClass (tested on a function)', function() {
+
+            it( 'failed init: invalid class', function() {
+
+                const controlFunction = 69;
+
+                let erroredAsExpected = false;
+
+                try {
+
+                    subzero.megaFreezeClass( controlFunction );
+                }
+                catch( err ) {
+
+                    if( err instanceof TypeError ) {
+
+                        expect( err.message ).to.equal( 'subzero error: invalid class' );
+
+                        erroredAsExpected = true;
+                    }
+                }
+                finally {
+
+                    expect( erroredAsExpected ).to.be.true;
+                }
+            });
+
+            it( 'normal operation', function() {
+
+                const controlFunctionToFreeze = function() {};
+
+                const InnerClass = class {};
+
+                const controlFunction = function() {};
+
+                controlFunction.x = {
+
+                    y: {}
+                };
+
+                InnerClass.x = {
+
+                    y: {}
+                };
+
+                const wontBeFrozen = {};
+
+                controlFunctionToFreeze.a = {
+
+                    b: {
+
+                        c: {
+
+                            d: {
+
+                                InnerClass,
+
+                                controlFunction,
+
+                                e: Object.freeze({ wontBeFrozen })
+                            }
+                        }
+                    }
+                };
+
+                controlFunctionToFreeze.prototype.x = {
+
+                    y: {
+
+                        z: {}
+                    },
+
+                    w: {}
+                };
+
+                expect( subzero.megaFreezeClass( controlFunctionToFreeze ) ).to.equal( controlFunctionToFreeze );
+
+                expect( Object.isFrozen( controlFunctionToFreeze ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.a ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.a.b ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.a.b.c ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.a.b.c.d ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.prototype ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.prototype.x ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.prototype.x.y ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.prototype.x.y.z ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.prototype.x.w ) ).to.be.true;
+                expect( Object.isFrozen( InnerClass ) ).to.be.true;
+                expect( Object.isFrozen( InnerClass.x ) ).to.be.true;
+                expect( Object.isFrozen( InnerClass.x.y ) ).to.be.true;
+                expect( Object.isFrozen( controlFunction ) ).to.be.true;
+                expect( Object.isFrozen( controlFunction.x ) ).to.be.true;
+                expect( Object.isFrozen( controlFunction.x.y ) ).to.be.true;
+                expect( Object.isFrozen( controlFunctionToFreeze.a.b.c.d.e.wontBeFrozen ) ).to.be.false;
+            });
+        });
+
         describe( '.megaFreezeObject', function() {
 
             it( 'failed init: invalid object', function() {
@@ -355,7 +587,7 @@ describe( MODULE_PATH, function() {
 
                 try {
 
-                    subzero.deepFreezeObject( controlObject );
+                    subzero.megaFreezeObject( controlObject );
                 }
                 catch( err ) {
 
