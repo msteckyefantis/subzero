@@ -17,11 +17,11 @@ npm install subzero
 
 ####function list (each function explained in more detail below):
 
-1. subzero.freezeClass
-2. subzero.deepFreezeClass
-3. subzero.deepFreezeObject
-4. subzero.megaFreezeClass
-5. subzero.megaFreezeObject
+1. [subzero.freezeClass](#1-subzerofreezeclass-classtofreeze-)
+2. [subzero.deepFreezeClass]((#2-subzerodeepfreezeclass-classtofreeze-)
+3. [subzero.deepFreezeObject](#3-subzerodeepfreezeobject-objecttofreeze-)
+4. [subzero.megaFreezeClass](#4-subzeromegafreezeclass-objecttofreeze-)
+5. [subzero.megaFreezeObject](#5-subzeromegafreezeclass-objecttofreeze-)
 
 <br>
 
@@ -304,7 +304,7 @@ C.prototype.x = {
 // !Object.isFrozen( C.a.b.c.d.e.wontBeFrozen );
 ```
 
-[![frieza.gif](https://s29.postimg.org/px2wfqu6v/frieza.gif)](https://postimg.org/image/nsijensk3/)
+[![frieza22.gif](https://s23.postimg.org/d6ri2wwm3/frieza22.gif)](https://postimg.org/image/djiw93evr/)
 
 ###5) subzero.megaFreezeClass( objectToFreeze )
 
