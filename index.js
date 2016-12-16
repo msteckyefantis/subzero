@@ -56,7 +56,9 @@ function deepFreezeObject( object ) {
         const property = object[ propertyName ];
 
         if(  object.hasOwnProperty( propertyName ) &&
+
             (typeof property === OBJECT ) &&
+
             (property !== null)
         ) {
 
@@ -78,9 +80,9 @@ function megaFreezeObject( object ) {
 
         if( object.hasOwnProperty( propertyName ) &&
 
-            (object[ propertyName ] !== null) &&
-
             (typeof property === OBJECT || typeof property === FUNCTION) &&
+
+            (property !== null) &&
 
             !Object.isFrozen( property )
         ) {
