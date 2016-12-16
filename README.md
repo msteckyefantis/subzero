@@ -9,7 +9,7 @@ Freeze a class and its prototype, or freeze an object.
 ##install:
 
 ```
-npm install freeze-class
+npm install subzero
 ```
 
 ##usage:
