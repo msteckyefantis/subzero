@@ -1,0 +1,37 @@
+{
+  "name": "subzero",
+  "version": "1.0.0",
+  "description": "class and object freezer",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- test --recursive",
+    "test/": "./node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- test --recursive",
+    "test_no_coverage": "mocha test/index.test.js"
+  },
+  "author": "Michael Stecky-Efantis",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0"
+  },
+  "keywords": [
+    "immutability",
+    "immutable",
+    "freeze",
+    "deep",
+    "mortal",
+    "kombat",
+    "class",
+    "prototype",
+    "ice",
+    "go",
+    "it",
+    "let",
+    "frozen"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/msteckyefantis/subzero"
+  }
+}
