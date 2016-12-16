@@ -74,7 +74,7 @@ const reference = subzero.freeze( C );
 
 ❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
 ###2) subzero.deepFreeze( functionOrClassOrObjectToFreeze )
-Deep freeze a class, object, or function (and its prototype for classes/functions). This will **not** freeze any classes or functions within the input object/function/class. It works by recursively freezing anything of type `"object"`.
+Deep freeze a class, object, or function. This will **not** freeze any classes or functions within the input object/function/class. It works by recursively freezing anything of type `"object"`.
 
 ```.js
 'use strict';
@@ -160,7 +160,7 @@ const reference = subzero.deepFreeze( o );
 
 
 ###3) subzero.megaFreeze( functionOrClassOrObjectToFreeze )
-Deep freeze a class, object, or function and its prototype. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `* MEGA FREEZE CORNER CASE`.
+Deep freeze a class, object, or function. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `* MEGA FREEZE CORNER CASE`.
 
 ```.js
 'use strict';
