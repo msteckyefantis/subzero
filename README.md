@@ -23,6 +23,7 @@ npm install subzero
 4. subzero.megaFreezeClass
 5. subzero.megaFreezeObject
 
+<br>
 
 ###1) subzero.freezeClass( ClassToFreeze )
 Freeze a class and its prototype.
@@ -88,6 +89,8 @@ InnerFunction.x = {
     y: {}
 };
 
+const willBeFrozen = {};
+
 C.a = {
 
     b: {
@@ -98,7 +101,9 @@ C.a = {
 
                 InnerClass,
 
-                InnerFunction
+                InnerFunction,
+                
+                e: Object.freeze({ willBeFrozen })
             }
         }
     }
@@ -136,6 +141,7 @@ subzero.deepFreezeClass( C );
 // !Object.isFrozen( InnerFunction );
 // !Object.isFrozen( InnerFunction.x );
 // !Object.isFrozen( InnerFunction.x.y );
+// Object.isFrozen( C.a.b.c.d.e.willBeFrozen );
 ```
 
 ❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
@@ -164,6 +170,8 @@ InnerFunction.x = {
     y: {}
 };
 
+const willBeFrozen = {};
+
 o.a = {
 
     b: {
@@ -174,7 +182,9 @@ o.a = {
 
                 InnerClass,
 
-                InnerFunction
+                InnerFunction,
+                
+                e: Object.freeze({ willBeFrozen })
             }
         }
     }
@@ -211,6 +221,7 @@ subzero.deepFreezeObject( o );
 // !Object.isFrozen( InnerFunction );
 // !Object.isFrozen( InnerFunction.x );
 // !Object.isFrozen( InnerFunction.x.y );
+// Object.isFrozen( o.a.b.c.d.e.willBeFrozen );
 ```
 
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)

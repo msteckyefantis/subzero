@@ -99,6 +99,8 @@ describe( MODULE_PATH, function() {
                     y: {}
                 };
 
+                const willBeFrozen = {};
+
                 C.a = {
 
                     b: {
@@ -109,7 +111,9 @@ describe( MODULE_PATH, function() {
 
                                 InnerClass,
 
-                                controlFunction
+                                controlFunction,
+
+                                e: Object.freeze({ willBeFrozen })
                             }
                         }
                     }
@@ -143,6 +147,7 @@ describe( MODULE_PATH, function() {
                 expect( Object.isFrozen( controlFunction ) ).to.be.false;
                 expect( Object.isFrozen( controlFunction.x ) ).to.be.false;
                 expect( Object.isFrozen( controlFunction.x.y ) ).to.be.false;
+                expect( Object.isFrozen( C.a.b.c.d.e.willBeFrozen ) ).to.be.true;
             });
         });
 
@@ -191,6 +196,8 @@ describe( MODULE_PATH, function() {
                     y: {}
                 };
 
+                const willBeFrozen = {};
+
                 o.a = {
 
                     b: {
@@ -201,7 +208,9 @@ describe( MODULE_PATH, function() {
 
                                 InnerClass,
 
-                                controlFunction
+                                controlFunction,
+
+                                e: Object.freeze({ willBeFrozen })
                             }
                         }
                     }
@@ -234,6 +243,7 @@ describe( MODULE_PATH, function() {
                 expect( Object.isFrozen( controlFunction ) ).to.be.false;
                 expect( Object.isFrozen( controlFunction.x ) ).to.be.false;
                 expect( Object.isFrozen( controlFunction.x.y ) ).to.be.false;
+                expect( Object.isFrozen( o.a.b.c.d.e.willBeFrozen ) ).to.be.true;
             });
         });
 
