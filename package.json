@@ -1,6 +1,6 @@
 {
   "name": "subzero",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "class and object freezer",
   "main": "index.js",
   "scripts": {
