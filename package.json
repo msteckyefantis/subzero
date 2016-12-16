@@ -1,7 +1,7 @@
 {
   "name": "subzero",
   "version": "3.0.11",
-  "description": "class and object freezer",
+  "description": "class, function, and object freezer",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- test --recursive",
@@ -24,6 +24,8 @@
     "subzero",
     "sub-zero",
     "deep",
+    "object",
+    "function",
     "kombat",
     "mortal",
     "class",

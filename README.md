@@ -4,7 +4,7 @@
 
 ##About:
 
-Freeze a class and its prototype, or freeze an object.
+Freeze a class, freeze a function, or freeze an object.
 
 ##install:
 
