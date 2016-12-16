@@ -24,7 +24,8 @@ npm install subzero
 5. [subzero.megaFreezeObject](#5-subzeromegafreezeobject-objecttofreeze-)
 
 
-#######Note: the mega freeze functions were inspired by [deep-freeze](https://github.com/substack/deep-freeze).
+>Note: the mega freeze functions were inspired by [deep-freeze](https://github.com/substack/deep-freeze).
+
 <br>
 
 
