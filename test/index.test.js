@@ -59,9 +59,9 @@ describe( MODULE_PATH, function() {
                 {
                     name: 'freeze',
 
-                    deepVariablesWillBeFrozen: false,
+                    deepObjectsWillBeFrozen: false,
 
-                    innerFunctionsWillBeFrozen: false,
+                    innerFunctionsAndClassesWillBeFrozen: false,
 
                     variableInsideAlreadyFrozenVariablesWillBeFrozen: false,
                 },
@@ -69,9 +69,9 @@ describe( MODULE_PATH, function() {
                 {
                     name: 'deepFreeze',
 
-                    deepVariablesWillBeFrozen: true,
+                    deepObjectsWillBeFrozen: true,
 
-                    innerFunctionsWillBeFrozen: false,
+                    innerFunctionsAndClassesWillBeFrozen: false,
 
                     variableInsideAlreadyFrozenVariablesWillBeFrozen: true,
                 },
@@ -79,9 +79,9 @@ describe( MODULE_PATH, function() {
                 {
                     name: 'megaFreeze',
 
-                    deepVariablesWillBeFrozen: true,
+                    deepObjectsWillBeFrozen: true,
 
-                    innerFunctionsWillBeFrozen: true,
+                    innerFunctionsAndClassesWillBeFrozen: true,
 
                     variableInsideAlreadyFrozenVariablesWillBeFrozen: false
                 }
@@ -167,26 +167,26 @@ describe( MODULE_PATH, function() {
                         expect( subzero[ functionData.name ]( subzeroVariableToValidate ) ).to.equal( subzeroVariableToValidate );
 
                         expect( Object.isFrozen( subzeroVariableToValidate ) ).to.be.true;
-                        expect( Object.isFrozen( subzeroVariableToValidate.a ) ).to.equal( functionData.deepVariablesWillBeFrozen );
-                        expect( Object.isFrozen( subzeroVariableToValidate.a.b ) ).to.equal( functionData.deepVariablesWillBeFrozen );
-                        expect( Object.isFrozen( subzeroVariableToValidate.a.b.c ) ).to.equal( functionData.deepVariablesWillBeFrozen );
-                        expect( Object.isFrozen( subzeroVariableToValidate.a.b.c.d ) ).to.equal( functionData.deepVariablesWillBeFrozen );
+                        expect( Object.isFrozen( subzeroVariableToValidate.a ) ).to.equal( functionData.deepObjectsWillBeFrozen );
+                        expect( Object.isFrozen( subzeroVariableToValidate.a.b ) ).to.equal( functionData.deepObjectsWillBeFrozen );
+                        expect( Object.isFrozen( subzeroVariableToValidate.a.b.c ) ).to.equal( functionData.deepObjectsWillBeFrozen );
+                        expect( Object.isFrozen( subzeroVariableToValidate.a.b.c.d ) ).to.equal( functionData.deepObjectsWillBeFrozen );
 
                         if( subzeroVariableData.type !== 'object' ) {
 
                             expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ] ) ).to.be.true;
                         }
 
-                        expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x ) ).to.equal( functionData.deepVariablesWillBeFrozen );
-                        expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x.y ) ).to.equal( functionData.deepVariablesWillBeFrozen );
-                        expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x.y.z ) ).to.equal( functionData.deepVariablesWillBeFrozen );
-                        expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x.w ) ).to.equal( functionData.deepVariablesWillBeFrozen );
-                        expect( Object.isFrozen( InnerClass ) ).to.equal( functionData.innerFunctionsWillBeFrozen );
-                        expect( Object.isFrozen( InnerClass.x ) ).to.equal( functionData.innerFunctionsWillBeFrozen );
-                        expect( Object.isFrozen( InnerClass.x.y ) ).to.equal( functionData.innerFunctionsWillBeFrozen );
-                        expect( Object.isFrozen( controlFunction ) ).to.equal( functionData.innerFunctionsWillBeFrozen );
-                        expect( Object.isFrozen( controlFunction.x ) ).to.equal( functionData.innerFunctionsWillBeFrozen );
-                        expect( Object.isFrozen( controlFunction.x.y ) ).to.equal( functionData.innerFunctionsWillBeFrozen );
+                        expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x ) ).to.equal( functionData.deepObjectsWillBeFrozen );
+                        expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x.y ) ).to.equal( functionData.deepObjectsWillBeFrozen );
+                        expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x.y.z ) ).to.equal( functionData.deepObjectsWillBeFrozen );
+                        expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x.w ) ).to.equal( functionData.deepObjectsWillBeFrozen );
+                        expect( Object.isFrozen( InnerClass ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
+                        expect( Object.isFrozen( InnerClass.x ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
+                        expect( Object.isFrozen( InnerClass.x.y ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
+                        expect( Object.isFrozen( controlFunction ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
+                        expect( Object.isFrozen( controlFunction.x ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
+                        expect( Object.isFrozen( controlFunction.x.y ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( objectInsideAlreadyFrozenObject ) ).to.equal( functionData.variableInsideAlreadyFrozenVariablesWillBeFrozen );
                     });
                 });
