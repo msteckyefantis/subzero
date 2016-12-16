@@ -4,8 +4,7 @@
 
 ##About:
 
-Freeze a class and its prototype, or freeze an object.
-
+Freeze a class and its prototype, or freeze an object. Note: v3 coming soon, with just the three following functions `subzero.freeze, subzero.deepFreeze, and subzero.megaFreeze`.
 
 ##install:
 
