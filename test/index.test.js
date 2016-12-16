@@ -64,6 +64,7 @@ describe( MODULE_PATH, function() {
                     innerFunctionsAndClassesWillBeFrozen: false,
 
                     variableInsideAlreadyFrozenVariablesWillBeFrozen: false,
+                    // NOTE: the (subzero)variables can be an object, a function, or a class
                 },
 
                 {
