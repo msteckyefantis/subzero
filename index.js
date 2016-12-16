@@ -4,7 +4,6 @@ const OBJECT = 'object';
 
 const FUNCTION = 'function';
 
-
 // NOTE: the subzeroVariable can be an object, a function, or a class
 const subzero = {
 
@@ -87,7 +86,6 @@ const megaFreeze = Object.freeze( function( subzeroVariable ) {
             megaFreeze( property );
         }
     }
-
 
     return subzeroVariable;
 });
