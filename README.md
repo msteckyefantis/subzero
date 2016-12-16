@@ -82,7 +82,7 @@ InnerClass.x = {
     y: {}
 };
 
-function InnerFunction {}
+function InnerFunction() {}
 
 InnerFunction.x = {
 
@@ -163,7 +163,7 @@ InnerClass.x = {
     y: {}
 };
 
-function InnerFunction {}
+function InnerFunction() {}
 
 InnerFunction.x = {
 
