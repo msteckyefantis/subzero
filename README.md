@@ -29,7 +29,7 @@ class C {
 	f() { return 22; }
 }
 
-freezeClass( C );
+subzero.freezeClass( C );
 
 /*
 	the following statements will now return true:
