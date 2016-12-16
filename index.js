@@ -23,11 +23,11 @@ module.exports = Object.freeze({
         return deepFreezeObject( classToFreeze );
     },
 
-    deepFreezeObject( classToFreeze ) {
+    deepFreezeObject( objectToFreeze ) {
 
-        validateObject( classToFreeze );
+        validateObject( objectToFreeze );
 
-        return deepFreezeObject( classToFreeze );
+        return deepFreezeObject( objectToFreeze );
     }
 });
 
@@ -60,9 +60,9 @@ function validateClass( classToFreeze ) {
 }
 
 
-function validateObject( classToFreeze ) {
+function validateObject( objectToFreeze ) {
 
-    if( typeof classToFreeze !== OBJECT ) {
+    if( typeof objectToFreeze !== OBJECT ) {
 
         throw new TypeError( 'subzero error: invalid object' );
     }
