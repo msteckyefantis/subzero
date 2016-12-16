@@ -306,16 +306,16 @@ C.prototype.x = {
 
 [![frieza22.gif](https://s23.postimg.org/d6ri2wwm3/frieza22.gif)](https://postimg.org/image/djiw93evr/)
 
-###5) subzero.megaFreezeClass( objectToFreeze )
+###5) subzero.megaFreezeObject( objectToFreeze )
 
 Deep freeze an object. This **will** freeze any classes, functions, and objects within the object. It works by recursively freezing anything of type `"object"` or `"function"`. Note the `MEGA FREEZE CORNER CASE *`.
 
 ```.js
 'use strict';
 
-class C {};
+const o =  {};
 
-class InnerClass {};
+const InnerClass = class {};
 
 InnerClass.x = {
 
@@ -332,54 +332,50 @@ controlFunction.x = {
 // MEGA FREEZE CORNER CASE *: be careful about objects within already frozen objects or functions
 const wontBeFrozen = {};
 
-C.a = {
+o.a = {
 
     b: {
 
-        c: {
+	c: {
 
-            d: {
+	    d: {
 
-                InnerClass,
+		InnerClass,
 
-                controlFunction,
+		controlFunction,
 
-                e: Object.freeze({ wontBeFrozen })
-            }
-        }
+		e: Object.freeze( { wontBeFrozen } )
+	    }
+	}
     }
 };
 
-C.prototype.x = {
+o.x = {
 
     y: {
 
-        z: {}
+	z: {}
     },
 
     w: {}
 };
 
+subzero.megaFreezeObject( o ) ).to.equal( o );
 
-/*
-	the following statements will now return true:
-*/
-
-// Object.isFrozen( C );
-// Object.isFrozen( C.a );
-// Object.isFrozen( C.a.b );
-// Object.isFrozen( C.a.b.c );
-// Object.isFrozen( C.a.b.c.d );
-// Object.isFrozen( C.prototype );
-// Object.isFrozen( C.prototype.x );
-// Object.isFrozen( C.prototype.x.y );
-// Object.isFrozen( C.prototype.x.y.z );
-// Object.isFrozen( C.prototype.x.w );
-// Object.isFrozen( InnerClass );
-// Object.isFrozen( InnerClass.x );
-// Object.isFrozen( InnerClass.x.y );
-// Object.isFrozen( controlFunction );
-// Object.isFrozen( controlFunction.x );
-// Object.isFrozen( controlFunction.x.y );
-// !Object.isFrozen( C.a.b.c.d.e.wontBeFrozen );
+Object.isFrozen( o )
+Object.isFrozen( o.a )
+Object.isFrozen( o.a.b )
+Object.isFrozen( o.a.b.c )
+Object.isFrozen( o.a.b.c.d )
+Object.isFrozen( o.x )
+Object.isFrozen( o.x.y )
+Object.isFrozen( o.x.y.z )
+Object.isFrozen( o.x.w )
+Object.isFrozen( InnerClass )
+Object.isFrozen( InnerClass.x )
+Object.isFrozen( InnerClass.x.y )
+Object.isFrozen( controlFunction )
+Object.isFrozen( controlFunction.x )
+Object.isFrozen( controlFunction.x.y )
+Object.isFrozen( o.a.b.c.d.e.wontBeFrozen )
 ```
