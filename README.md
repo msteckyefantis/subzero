@@ -1,6 +1,6 @@
 #subzero
 
-[![subzero-mortal-kombat.gif](https://s23.postimg.org/7p5byhrq3/subzero_mortal_kombat.gif)](https://postimg.org/image/ml3v6334n/)
+[![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
 ##About:
 Freeze a class and its prototype, or freeze an object.
@@ -115,7 +115,6 @@ subzero.deepFreezeClass( C );
 // !Object.isFrozen( InnerClass.x.y );
 
 ```
-[![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
 ❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
 ###subzero.deepFreezeObject
