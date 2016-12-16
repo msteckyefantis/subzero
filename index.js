@@ -85,7 +85,7 @@ function megaFreezeObject( object ) {
             !Object.isFrozen( property )
         ) {
 
-          megaFreezeObject( property );
+            megaFreezeObject( property );
         }
     }
 
