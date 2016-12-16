@@ -14,7 +14,7 @@ npm install subzero
 ##usage:
 
 ###subzero.freezeClass( ClassToFreeze )
-Freeze a class and its prototype
+Freeze a class and its prototype.
 
 ```.js
 'use strict';
