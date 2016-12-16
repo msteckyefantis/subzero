@@ -233,7 +233,7 @@ subzero.deepFreezeObject( o );
 
 ###4) subzero.megaFreezeClass( objectToFreeze )
 
-Deep freeze an object. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `MEGA FREEZE CORNER CASE *`.
+Deep freeze an object. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `* MEGA FREEZE CORNER CASE`.
 
 ```.js
 'use strict';
@@ -254,7 +254,9 @@ controlFunction.x = {
     y: {}
 };
 
-// * MEGA FREEZE CORNER CASE: be careful about objects within already frozen objects or functions
+/* MEGA FREEZE CORNER CASE:
+	be careful about objects and functions within already frozen objects and functions
+*/
 const wontBeFrozen = {};
 
 C.a = {
@@ -313,7 +315,7 @@ C.prototype.x = {
 
 ###5) subzero.megaFreezeObject( objectToFreeze )
 
-Deep freeze an object. This **will** freeze any classes, functions, and objects within the object. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `MEGA FREEZE CORNER CASE *`.
+Deep freeze an object. This **will** freeze any classes, functions, and objects within the object. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `* MEGA FREEZE CORNER CASE`.
 
 ```.js
 'use strict';
@@ -334,7 +336,9 @@ controlFunction.x = {
     y: {}
 };
 
-// MEGA FREEZE CORNER CASE *: be careful about objects within already frozen objects or functions
+/* MEGA FREEZE CORNER CASE:
+	be careful about objects and functions within already frozen objects and functions
+*/
 const wontBeFrozen = {};
 
 o.a = {
