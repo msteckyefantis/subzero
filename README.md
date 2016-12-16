@@ -287,6 +287,7 @@ C.prototype.x = {
     w: {}
 };
 
+subzero.megaFreezeClass( C );
 
 /*
 	the following statements will now return true:
@@ -369,7 +370,11 @@ o.x = {
     w: {}
 };
 
-subzero.megaFreezeObject( o ) ).to.equal( o );
+subzero.megaFreezeObject( o );
+
+/*
+	the following statements will now return true:
+*/
 
 // Object.isFrozen( o );
 // Object.isFrozen( o.a );
