@@ -11,7 +11,7 @@ const subzero = {
 
         if( isSubzeroVariable( value ) ) {
 
-            if( isFunctionOrClass( value ) && value.prototype ) {
+            if( isFunctionOrClass( value ) ) {
 
                 Object.freeze( value.prototype );
             }
