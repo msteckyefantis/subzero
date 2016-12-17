@@ -16,7 +16,7 @@ const subzero = {
                 Object.freeze( value.prototype );
             }
 
-            Object.freeze( value )
+            Object.freeze( value );
         }
 
         return value;
