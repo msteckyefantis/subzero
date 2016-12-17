@@ -11,25 +11,28 @@ const subzero = {
 
         if( isSubzeroVariable( value ) ) {
 
-            return freeze( value );
+            const prototype = value.prototype;
+
+            if( prototype ) {
+
+                Object.freeze( prototype );
+            }
         }
 
-        return value;
+        return Object.freeze( value );
     },
 
     megaFreeze( value ) {
 
         if( isSubzeroVariable( value ) ) {
 
-            const processedSubzeroVariables = [];
+            const processedSubzeroVariables = [ Object.freeze( value ) ];
 
-            megaFreeze( value, processedSubzeroVariables );
+            megaFreezeProperties( value, processedSubzeroVariables );
 
             processedSubzeroVariables.length = 0;
 
             Object.freeze( processedSubzeroVariables );
-
-            return value;
         }
 
         return value;
@@ -37,34 +40,21 @@ const subzero = {
 };
 
 
-const freeze = Object.freeze( function( subzeroVariable ) {
-
-    const prototype = subzeroVariable.prototype;
-
-    if( prototype ) {
-
-        Object.freeze( prototype );
-    }
-
-    return Object.freeze( subzeroVariable );
-});
-
-
-const megaFreeze = Object.freeze( function( subzeroVariable, processedSubzeroVariables ) {
+const megaFreezeProperties = Object.freeze( function( subzeroVariable, processedSubzeroVariables ) {
 
     for( const propertyName of Object.getOwnPropertyNames( subzeroVariable ) ) {
 
         const property = subzeroVariable[ propertyName ];
 
-        if( isSubzeroVariable( property ) && (processedSubzeroVariables.indexOf( property ) < 0 ) ) {
+        if( isSubzeroVariable( property ) && (processedSubzeroVariables.indexOf( property ) < 0) ) {
+
+            Object.freeze( property );
 
             processedSubzeroVariables.push( property );
 
-            megaFreeze( property, processedSubzeroVariables );
+            megaFreezeProperties( property, processedSubzeroVariables );
         }
     }
-
-    Object.freeze( subzeroVariable );
 });
 
 
