@@ -157,11 +157,39 @@ f.prototype.x = {
     w: {}
 };
 
-const reference = subzero.megaFreeze( f );
-
 /*
-	none of the following assertions will throw an AssertionError:
+    It's time to freeze your opponent for the flawless victory with fatality.
+
+	None of the following assertions will throw an AssertionError:
 */
+
+console.assert( !Object.isFrozen( f ) );
+console.assert( !Object.isFrozen( f.prototype ) );
+console.assert( !Object.isFrozen( f.a ) );
+console.assert( !Object.isFrozen( f.a.b ) );
+console.assert( !Object.isFrozen( f.a.b.c ) );
+console.assert( !Object.isFrozen( f.a.b.c.d ) );
+console.assert( !Object.isFrozen( f.prototype.x ) );
+console.assert( !Object.isFrozen( f.prototype.x.y ) );
+console.assert( !Object.isFrozen( f.prototype.x.y.z ) );
+console.assert( !Object.isFrozen( f.prototype.x.w ) );
+console.assert( !Object.isFrozen( InnerClass ) );
+console.assert( !Object.isFrozen( InnerClass.prototype ) );
+console.assert( !Object.isFrozen( InnerClass.x ) );
+console.assert( !Object.isFrozen( InnerClass.x.y ) );
+console.assert( !Object.isFrozen( innerFunction ) );
+console.assert( !Object.isFrozen( innerFunction.prototype ) );
+console.assert( !Object.isFrozen( innerFunction.x ) );
+console.assert( !Object.isFrozen( innerFunction.x.y ) );
+console.assert( !Object.isFrozen( objectInsideAlreadyFrozenObject ) );
+console.assert( !Object.isFrozen( objectInsideAlreadyFrozenFunction ) );
+console.assert( !Object.isFrozen( functionInsideAlreadyFrozenObject ) );
+console.assert( !Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) );
+console.assert( !Object.isFrozen( functionInsideAlreadyFrozenFunction ) );
+console.assert( !Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) );
+
+// Mega Freeze f
+const reference = subzero.megaFreeze( f );
 
 console.assert( ( reference === f ) );
 console.assert( Object.isFrozen( f ) );
