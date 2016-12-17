@@ -4,7 +4,7 @@ const OBJECT = 'object';
 
 const FUNCTION = 'function';
 
-// NOTE: the subzeroVariable can be an object, a function, or a class
+// NOTE: a subzeroVariable refers to an object, a function, or a class
 const subzero = {
 
     freeze( value ) {

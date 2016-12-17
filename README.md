@@ -160,34 +160,34 @@ f.prototype.x = {
 const reference = subzero.megaFreeze( f );
 
 /*
-	the following statements will now return true:
+	none of the following assertions will throw an AssertionError:
 */
 
-// ( reference === f );
-// Object.isFrozen( f );
-// Object.isFrozen( f.prototype );
-// Object.isFrozen( f.a );
-// Object.isFrozen( f.a.b );
-// Object.isFrozen( f.a.b.c );
-// Object.isFrozen( f.a.b.c.d );
-// Object.isFrozen( f.prototype.x );
-// Object.isFrozen( f.prototype.x.y );
-// Object.isFrozen( f.prototype.x.y.z );
-// Object.isFrozen( f.prototype.x.w );
-// Object.isFrozen( InnerClass );
-// Object.isFrozen( InnerClass.prototype );
-// Object.isFrozen( InnerClass.x );
-// Object.isFrozen( InnerClass.x.y );
-// Object.isFrozen( innerFunction );
-// Object.isFrozen( innerFunction.prototype );
-// Object.isFrozen( innerFunction.x );
-// Object.isFrozen( innerFunction.x.y );
-// Object.isFrozen( objectInsideAlreadyFrozenObject );
-// Object.isFrozen( objectInsideAlreadyFrozenFunction );
-// Object.isFrozen( functionInsideAlreadyFrozenObject );
-// Object.isFrozen( functionInsideAlreadyFrozenObject.prototype );
-// Object.isFrozen( functionInsideAlreadyFrozenFunction );
-// Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype );
+console.assert( ( reference === f ) );
+console.assert( Object.isFrozen( f ) );
+console.assert( Object.isFrozen( f.prototype ) );
+console.assert( Object.isFrozen( f.a ) );
+console.assert( Object.isFrozen( f.a.b ) );
+console.assert( Object.isFrozen( f.a.b.c ) );
+console.assert( Object.isFrozen( f.a.b.c.d ) );
+console.assert( Object.isFrozen( f.prototype.x ) );
+console.assert( Object.isFrozen( f.prototype.x.y ) );
+console.assert( Object.isFrozen( f.prototype.x.y.z ) );
+console.assert( Object.isFrozen( f.prototype.x.w ) );
+console.assert( Object.isFrozen( InnerClass ) );
+console.assert( Object.isFrozen( InnerClass.prototype ) );
+console.assert( Object.isFrozen( InnerClass.x ) );
+console.assert( Object.isFrozen( InnerClass.x.y ) );
+console.assert( Object.isFrozen( innerFunction ) );
+console.assert( Object.isFrozen( innerFunction.prototype ) );
+console.assert( Object.isFrozen( innerFunction.x ) );
+console.assert( Object.isFrozen( innerFunction.x.y ) );
+console.assert( Object.isFrozen( objectInsideAlreadyFrozenObject ) );
+console.assert( Object.isFrozen( objectInsideAlreadyFrozenFunction ) );
+console.assert( Object.isFrozen( functionInsideAlreadyFrozenObject ) );
+console.assert( Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) );
+console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction ) );
+console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) );
 ```
 
 [![frieza22.gif](https://s23.postimg.org/d6ri2wwm3/frieza22.gif)](https://postimg.org/image/djiw93evr/)
