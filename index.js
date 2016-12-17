@@ -13,7 +13,7 @@ const subzero = {
 
             const prototype = value.prototype;
 
-            if( prototype ) {
+            if( isFunctionOrClass( value ) && prototype ) {
 
                 Object.freeze( prototype );
             }
@@ -62,9 +62,13 @@ const isSubzeroVariable = Object.freeze( function( value ) {
 
     const isObject = ( (value !== null) && (typeof value === OBJECT) );
 
-    const isFunctionOrClass = typeof value === FUNCTION;
+    return( isFunctionOrClass( value ) || isObject );
+});
 
-    return( isFunctionOrClass || isObject );
+
+const isFunctionOrClass = Object.freeze( function( value ) {
+
+    return( typeof value === FUNCTION );
 });
 
 
