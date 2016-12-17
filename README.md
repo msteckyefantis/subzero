@@ -163,7 +163,7 @@ const reference = subzero.deepFreeze( o );
 
 
 ###3) subzero.megaFreeze( functionOrClassOrObjectToFreeze )
-Deep freeze a class, an object, or a function. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `* MEGA FREEZE CORNER CASE`.
+Deep freeze a class, an object, or a function. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`.
 
 ```.js
 'use strict';
@@ -174,7 +174,7 @@ Deep freeze a class, an object, or a function. This **will** freeze any classes,
 */
 function f() {}
 
-class InnerClass {};
+const InnerClass = class {};
 
 InnerClass.x = {
 
@@ -188,10 +188,21 @@ innerFunction.x = {
     y: {}
 };
 
-/* MEGA FREEZE CORNER CASE:
-	be careful about objects/functions within already frozen objects and functions
-*/
-const wontBeFrozen = {};
+const objectInsideAlreadyFrozenObject = {};
+
+const functionInsideAlreadyFrozenObject = function() {};
+
+const objectInsideAlreadyFrozenFunction = {};
+
+const functionInsideAlreadyFrozenFunction = function() {};
+
+const functionToFreeze = function() {};
+
+functionToFreeze.objectInsideAlreadyFrozenFunction = objectInsideAlreadyFrozenFunction;
+
+functionToFreeze.functionInsideAlreadyFrozenFunction = functionInsideAlreadyFrozenFunction;
+
+const frozenFunctionWithNonFrozenObjectInside = Object.freeze( functionToFreeze );
 
 f.a = {
 
@@ -205,7 +216,14 @@ f.a = {
 
                 innerFunction,
 
-                e: Object.freeze({ wontBeFrozen })
+                e: Object.freeze({
+
+                    objectInsideAlreadyFrozenObject,
+
+                    functionInsideAlreadyFrozenObject
+                }),
+
+                frozenFunctionWithNonFrozenObjectInside
             }
         }
     }
@@ -246,7 +264,10 @@ const reference = subzero.megaFreeze( f );
 // Object.isFrozen( innerFunction.x );
 // Object.isFrozen( innerFunction.x.y );
 // Object.isFrozen( innerFunction.prototype );
-// !Object.isFrozen( wontBeFrozen );
+// Object.isFrozen( objectInsideAlreadyFrozenObject );
+// Object.isFrozen( objectInsideAlreadyFrozenFunction );
+// Object.isFrozen( functionInsideAlreadyFrozenObject );
+// Object.isFrozen( functionInsideAlreadyFrozenFunction );
 ```
 
 [![frieza22.gif](https://s23.postimg.org/d6ri2wwm3/frieza22.gif)](https://postimg.org/image/djiw93evr/)

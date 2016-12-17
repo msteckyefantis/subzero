@@ -31,7 +31,7 @@ const subzero = {
 
         if( isSubzeroVariable( value ) ) {
 
-            return megaFreeze( value );
+            return megaFreeze( value, [] );
         }
 
         return value;
@@ -71,9 +71,7 @@ const deepFreeze = Object.freeze( function( subzeroVariable ) {
 });
 
 
-const megaFreeze = Object.freeze( function( subzeroVariable ) {
-
-    Object.freeze( subzeroVariable );
+const megaFreeze = Object.freeze( function( subzeroVariable, processed ) {
 
     for( const propertyName of Object.getOwnPropertyNames( subzeroVariable ) ) {
 
@@ -83,20 +81,22 @@ const megaFreeze = Object.freeze( function( subzeroVariable ) {
 
             isSubzeroVariable( property ) &&
 
-            !Object.isFrozen( property )
+            !isInArray( processed, property )
         ) {
 
-            megaFreeze( property );
+            processed.push( property );
+
+            megaFreeze( property, processed );
         }
     }
 
-    return subzeroVariable;
+    return Object.freeze( subzeroVariable );
 });
 
 
 const isSubzeroVariable = Object.freeze( function( value ) {
 
-    return isFunctionOrClass( value ) || isObject( value );
+    return( isFunctionOrClass( value ) || isObject( value ) );
 });
 
 
@@ -121,5 +121,10 @@ const isFunctionOrClass = Object.freeze( function( value ) {
     return false;
 });
 
+
+const isInArray = Object.freeze( function( array, value ) {
+
+    return( array.indexOf( value ) >= 0 );
+});
 
 module.exports = subzero.megaFreeze( subzero );

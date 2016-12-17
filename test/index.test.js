@@ -59,8 +59,13 @@ describe( MODULE_PATH, function() {
 
                     innerFunctionsAndClassesWillBeFrozen: false,
 
-                    variablesInsideAlreadyFrozenObjectsWillBeFrozen: false,
-                    // NOTE: the (subzero)variables can be an object, a function, or a class
+                    objectsInsideAlreadyFrozenObjectsWillBeFrozen: false,
+
+                    objectsInsideAlreadyFrozenFunctionsWillBeFrozen: false,
+
+                    functionsInsideAlreadyFrozenFunctionsWillBeFrozen: false,
+
+                    functionsInsideAlreadyFrozenObjectsWillBeFrozen: false
                 },
 
                 {
@@ -70,7 +75,13 @@ describe( MODULE_PATH, function() {
 
                     innerFunctionsAndClassesWillBeFrozen: false,
 
-                    variablesInsideAlreadyFrozenObjectsWillBeFrozen: true,
+                    objectsInsideAlreadyFrozenObjectsWillBeFrozen: true,
+
+                    objectsInsideAlreadyFrozenFunctionsWillBeFrozen: false,
+
+                    functionsInsideAlreadyFrozenFunctionsWillBeFrozen: false,
+
+                    functionsInsideAlreadyFrozenObjectsWillBeFrozen: false
                 },
 
                 {
@@ -80,7 +91,13 @@ describe( MODULE_PATH, function() {
 
                     innerFunctionsAndClassesWillBeFrozen: true,
 
-                    variablesInsideAlreadyFrozenObjectsWillBeFrozen: false
+                    objectsInsideAlreadyFrozenObjectsWillBeFrozen: true,
+
+                    objectsInsideAlreadyFrozenFunctionsWillBeFrozen: true,
+
+                    functionsInsideAlreadyFrozenFunctionsWillBeFrozen: true,
+
+                    functionsInsideAlreadyFrozenObjectsWillBeFrozen: true
                 }
 
             ].forEach( function( functionData ) {
@@ -133,11 +150,17 @@ describe( MODULE_PATH, function() {
 
                         const objectInsideAlreadyFrozenObject = {};
 
+                        const functionInsideAlreadyFrozenObject = function() {};
+
                         const objectInsideAlreadyFrozenFunction = {};
+
+                        const functionInsideAlreadyFrozenFunction = function() {};
 
                         const functionToFreeze = function() {};
 
                         functionToFreeze.objectInsideAlreadyFrozenFunction = objectInsideAlreadyFrozenFunction;
+
+                        functionToFreeze.functionInsideAlreadyFrozenFunction = functionInsideAlreadyFrozenFunction;
 
                         const frozenFunctionWithNonFrozenObjectInside = Object.freeze( functionToFreeze );
 
@@ -153,7 +176,12 @@ describe( MODULE_PATH, function() {
 
                                         controlFunction,
 
-                                        e: Object.freeze({ objectInsideAlreadyFrozenObject }),
+                                        e: Object.freeze({
+
+                                            objectInsideAlreadyFrozenObject,
+
+                                            functionInsideAlreadyFrozenObject
+                                        }),
 
                                         frozenFunctionWithNonFrozenObjectInside
                                     }
@@ -200,8 +228,10 @@ describe( MODULE_PATH, function() {
                         expect( Object.isFrozen( controlFunction.prototype ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( controlFunction.x ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( controlFunction.x.y ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
-                        expect( Object.isFrozen( objectInsideAlreadyFrozenObject ) ).to.equal( functionData.variablesInsideAlreadyFrozenObjectsWillBeFrozen );
-                        expect( Object.isFrozen( objectInsideAlreadyFrozenFunction ) ).to.false;
+                        expect( Object.isFrozen( objectInsideAlreadyFrozenObject ) ).to.equal( functionData.objectsInsideAlreadyFrozenObjectsWillBeFrozen );
+                        expect( Object.isFrozen( objectInsideAlreadyFrozenFunction ) ).to.equal( functionData.objectsInsideAlreadyFrozenFunctionsWillBeFrozen );
+                        expect( Object.isFrozen( functionInsideAlreadyFrozenFunction ) ).to.equal( functionData.functionsInsideAlreadyFrozenFunctionsWillBeFrozen );
+                        expect( Object.isFrozen( functionInsideAlreadyFrozenObject ) ).to.equal( functionData.functionsInsideAlreadyFrozenObjectsWillBeFrozen )
                     });
                 });
             });
