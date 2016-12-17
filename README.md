@@ -24,7 +24,7 @@ npm install subzero
 <br>
 ❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
 
-####no-op
+####no-op:
 If the input value is not an object, a function, or a class for either of subzero's functions, the return value will be the input value unaltered.
 
 
