@@ -192,6 +192,7 @@ console.assert( !Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype 
 const reference = subzero.megaFreeze( f );
 
 console.assert( ( reference === f ) );
+
 console.assert( Object.isFrozen( f ) );
 console.assert( Object.isFrozen( f.prototype ) );
 console.assert( Object.isFrozen( f.a ) );
