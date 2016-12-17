@@ -52,7 +52,6 @@ class C {
 
 const reference = subzero.freeze( C );
 
-
 /*
 	the following statements will now return true:
 */
@@ -80,7 +79,7 @@ const reference = subzero.freeze( C );
 
 
 ###2) subzero.megaFreeze( functionOrClassOrObjectToFreeze )
-Deep freeze a class, an object, or a function. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`.
+Deep freeze a class, an object, or a function. This will freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`.
 
 ```.js
 'use strict';
