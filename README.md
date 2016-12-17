@@ -166,7 +166,7 @@ Deep freeze a class, object, or function. This **will** freeze any classes, func
 'use strict';
 
 /*
-	this example uses an function, subzero.megaFreeze also works
+	this example uses a function, subzero.megaFreeze also works
 	with objects and classes
 */
 function f() {}
