@@ -85,6 +85,8 @@ Deep freeze a class, an object, or a function. This **will** freeze any classes,
 ```.js
 'use strict';
 
+const subzero = require( 'subzero' );
+
 /*
 	this example uses a function, subzero.megaFreeze also works
 	with objects and classes
