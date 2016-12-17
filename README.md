@@ -4,7 +4,7 @@
 
 ##About:
 
-Freeze a class, freeze a function, or freeze an object. Note: v4 coming soon, non function/object/class input will be treated as a no-op instead of throwing an error.
+Freeze a class, freeze a function, or freeze an object.
 
 ##install:
 
@@ -24,10 +24,13 @@ npm install subzero
 
 <br>
 
+####No-op
+If the input value is not an object, a function, or a class for any of subzero's functions, the return value will be the input value unaltered.
+
 
 
 ###1) subzero.freeze( functionOrClassOrObjectToFreeze )
-Freeze a class or function and its prototype. For object input, it acts the exact same way as Object.freeze.
+Freeze a class or a function and its prototype. For object input, it acts the exact same way as [Object.freeze](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze).
 
 ```.js
 'use strict';
@@ -74,7 +77,7 @@ const reference = subzero.freeze( C );
 
 ❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
 ###2) subzero.deepFreeze( functionOrClassOrObjectToFreeze )
-Deep freeze a class, object, or function. This will **not** freeze any classes or functions within the input object/function/class. It works by recursively freezing anything of type `"object"`.
+Deep freeze a class, an object, or a function. This will **not** freeze any classes or functions within the input object/function/class. It works by recursively freezing anything of type `"object"`.
 
 ```.js
 'use strict';
@@ -160,7 +163,7 @@ const reference = subzero.deepFreeze( o );
 
 
 ###3) subzero.megaFreeze( functionOrClassOrObjectToFreeze )
-Deep freeze a class, object, or function. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `* MEGA FREEZE CORNER CASE`.
+Deep freeze a class, an object, or a function. This **will** freeze any classes, functions, and objects within the class. It works by recursively freezing anything of type `"object"` or `"function"`, if they are **unfrozen**. Note the `* MEGA FREEZE CORNER CASE`.
 
 ```.js
 'use strict';
@@ -236,11 +239,13 @@ const reference = subzero.megaFreeze( f );
 // Object.isFrozen( f.prototype.x.y.z );
 // Object.isFrozen( f.prototype.x.w );
 // Object.isFrozen( InnerClass );
+// Object.isFrozen( InnerClass.prototype );
 // Object.isFrozen( InnerClass.x );
 // Object.isFrozen( InnerClass.x.y );
 // Object.isFrozen( innerFunction );
 // Object.isFrozen( innerFunction.x );
 // Object.isFrozen( innerFunction.x.y );
+// Object.isFrozen( innerFunction.prototype );
 // !Object.isFrozen( wontBeFrozen );
 ```
 

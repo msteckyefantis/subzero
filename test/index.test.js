@@ -16,7 +16,7 @@ describe( MODULE_PATH, function() {
 
     describe( 'subzero', function() {
 
-        describe( 'init failiures', function() {
+        describe( 'no op, return input value (non object, function, or class input)', function() {
 
             [
 
@@ -26,29 +26,25 @@ describe( MODULE_PATH, function() {
 
             ].forEach( function( functionName ) {
 
-                it( `${ functionName } failed init: invalid input type`, function() {
+                it( `${ functionName } with number input`, function() {
 
-                    const ControlClass = 69;
+                    const controlNumber = 69;
 
-                    let erroredAsExpected = false;
+                    expect( subzero[ functionName ]( controlNumber ) ).to.equal( controlNumber );
+                });
 
-                    try {
+                it( `${ functionName } with string input`, function() {
 
-                        subzero[ functionName ]( ControlClass );
-                    }
-                    catch( err ) {
+                    const controlString = 'xxx';
 
-                        if( err instanceof TypeError ) {
+                    expect( subzero[ functionName ]( controlString ) ).to.equal( controlString );
+                });
 
-                            expect( err.message ).to.equal( 'subzero error: input must be an object, function, or class' );
+                it( `${ functionName } with bool input`, function() {
 
-                            erroredAsExpected = true;
-                        }
-                    }
-                    finally {
+                    const controlBool = true;
 
-                        expect( erroredAsExpected ).to.be.true;
-                    }
+                    expect( subzero[ functionName ]( controlBool ) ).to.equal( controlBool );
                 });
             });
         });
@@ -63,7 +59,7 @@ describe( MODULE_PATH, function() {
 
                     innerFunctionsAndClassesWillBeFrozen: false,
 
-                    variableInsideAlreadyFrozenVariablesWillBeFrozen: false,
+                    variablesInsideAlreadyFrozenObjectsWillBeFrozen: false,
                     // NOTE: the (subzero)variables can be an object, a function, or a class
                 },
 
@@ -74,7 +70,7 @@ describe( MODULE_PATH, function() {
 
                     innerFunctionsAndClassesWillBeFrozen: false,
 
-                    variableInsideAlreadyFrozenVariablesWillBeFrozen: true,
+                    variablesInsideAlreadyFrozenObjectsWillBeFrozen: true,
                 },
 
                 {
@@ -84,7 +80,7 @@ describe( MODULE_PATH, function() {
 
                     innerFunctionsAndClassesWillBeFrozen: true,
 
-                    variableInsideAlreadyFrozenVariablesWillBeFrozen: false
+                    variablesInsideAlreadyFrozenObjectsWillBeFrozen: false
                 }
 
             ].forEach( function( functionData ) {
@@ -137,6 +133,14 @@ describe( MODULE_PATH, function() {
 
                         const objectInsideAlreadyFrozenObject = {};
 
+                        const objectInsideAlreadyFrozenFunction = {};
+
+                        const functionToFreeze = function() {};
+
+                        functionToFreeze.objectInsideAlreadyFrozenFunction = objectInsideAlreadyFrozenFunction;
+
+                        const frozenFunctionWithNonFrozenObjectInside = Object.freeze( functionToFreeze );
+
                         subzeroVariableToValidate.a = {
 
                             b: {
@@ -149,7 +153,9 @@ describe( MODULE_PATH, function() {
 
                                         controlFunction,
 
-                                        e: Object.freeze({ objectInsideAlreadyFrozenObject })
+                                        e: Object.freeze({ objectInsideAlreadyFrozenObject }),
+
+                                        frozenFunctionWithNonFrozenObjectInside
                                     }
                                 }
                             }
@@ -187,12 +193,15 @@ describe( MODULE_PATH, function() {
                         expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x.y.z ) ).to.equal( functionData.innerObjectsWillBeFrozen );
                         expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x.w ) ).to.equal( functionData.innerObjectsWillBeFrozen );
                         expect( Object.isFrozen( InnerClass ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
+                        expect( Object.isFrozen( InnerClass.prototype ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( InnerClass.x ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( InnerClass.x.y ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( controlFunction ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
+                        expect( Object.isFrozen( controlFunction.prototype ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( controlFunction.x ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( controlFunction.x.y ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
-                        expect( Object.isFrozen( objectInsideAlreadyFrozenObject ) ).to.equal( functionData.variableInsideAlreadyFrozenVariablesWillBeFrozen );
+                        expect( Object.isFrozen( objectInsideAlreadyFrozenObject ) ).to.equal( functionData.variablesInsideAlreadyFrozenObjectsWillBeFrozen );
+                        expect( Object.isFrozen( objectInsideAlreadyFrozenFunction ) ).to.false;
                     });
                 });
             });
