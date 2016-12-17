@@ -214,7 +214,9 @@ describe( MODULE_PATH, function() {
                         expect( Object.isFrozen( objectInsideAlreadyFrozenObject ) ).to.equal( functionData.objectsInsideAlreadyFrozenObjectsWillBeFrozen );
                         expect( Object.isFrozen( objectInsideAlreadyFrozenFunction ) ).to.equal( functionData.objectsInsideAlreadyFrozenFunctionsWillBeFrozen );
                         expect( Object.isFrozen( functionInsideAlreadyFrozenFunction ) ).to.equal( functionData.functionsInsideAlreadyFrozenFunctionsWillBeFrozen );
+                        expect( Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) ).to.equal( functionData.objectsInsideAlreadyFrozenFunctionsWillBeFrozen );
                         expect( Object.isFrozen( functionInsideAlreadyFrozenObject ) ).to.equal( functionData.functionsInsideAlreadyFrozenObjectsWillBeFrozen )
+                        expect( Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) ).to.equal( functionData.objectsInsideAlreadyFrozenFunctionsWillBeFrozen );
                     });
                 });
             });

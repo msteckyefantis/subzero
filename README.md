@@ -186,7 +186,9 @@ const reference = subzero.megaFreeze( f );
 // Object.isFrozen( objectInsideAlreadyFrozenObject );
 // Object.isFrozen( objectInsideAlreadyFrozenFunction );
 // Object.isFrozen( functionInsideAlreadyFrozenObject );
+// Object.isFrozen( functionInsideAlreadyFrozenObject.prototype );
 // Object.isFrozen( functionInsideAlreadyFrozenFunction );
+// Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype );
 ```
 
 [![frieza22.gif](https://s23.postimg.org/d6ri2wwm3/frieza22.gif)](https://postimg.org/image/djiw93evr/)
