@@ -40,8 +40,8 @@ Freeze a class or a function and its prototype. For object input, it acts the ex
 const subzero = require( 'subzero' );
 
 /*
-	this example uses a class, subzero.freeze also works
-	with objects and functions
+	this example uses a class,
+    subzero.freeze also works with objects and functions
 */
 class C {
 
@@ -87,8 +87,8 @@ Deep freeze a class, an object, or a function. This will freeze any classes, fun
 const subzero = require( 'subzero' );
 
 /*
-	this example uses a function, subzero.megaFreeze also works
-	with objects and classes
+	this example uses a function,
+    subzero.megaFreeze also works with objects and classes
 */
 function f() {}
 
@@ -179,9 +179,9 @@ const reference = subzero.megaFreeze( f );
 // Object.isFrozen( InnerClass.x );
 // Object.isFrozen( InnerClass.x.y );
 // Object.isFrozen( innerFunction );
+// Object.isFrozen( innerFunction.prototype );
 // Object.isFrozen( innerFunction.x );
 // Object.isFrozen( innerFunction.x.y );
-// Object.isFrozen( innerFunction.prototype );
 // Object.isFrozen( objectInsideAlreadyFrozenObject );
 // Object.isFrozen( objectInsideAlreadyFrozenFunction );
 // Object.isFrozen( functionInsideAlreadyFrozenObject );
