@@ -17,9 +17,11 @@ const subzero = {
 
                 Object.freeze( prototype );
             }
+
+            Object.freeze( value )
         }
 
-        return Object.freeze( value );
+        return value;
     },
 
     megaFreeze( value ) {
