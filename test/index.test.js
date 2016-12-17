@@ -21,7 +21,6 @@ describe( MODULE_PATH, function() {
             [
 
                 'freeze',
-                'deepFreeze',
                 'megaFreeze'
 
             ].forEach( function( functionName ) {
@@ -60,22 +59,6 @@ describe( MODULE_PATH, function() {
                     innerFunctionsAndClassesWillBeFrozen: false,
 
                     objectsInsideAlreadyFrozenObjectsWillBeFrozen: false,
-
-                    objectsInsideAlreadyFrozenFunctionsWillBeFrozen: false,
-
-                    functionsInsideAlreadyFrozenFunctionsWillBeFrozen: false,
-
-                    functionsInsideAlreadyFrozenObjectsWillBeFrozen: false
-                },
-
-                {
-                    name: 'deepFreeze',
-
-                    innerObjectsWillBeFrozen: true,
-
-                    innerFunctionsAndClassesWillBeFrozen: false,
-
-                    objectsInsideAlreadyFrozenObjectsWillBeFrozen: true,
 
                     objectsInsideAlreadyFrozenFunctionsWillBeFrozen: false,
 

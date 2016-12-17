@@ -17,21 +17,19 @@ const subzero = {
         return value;
     },
 
-    deepFreeze( value ) {
-
-        if( isSubzeroVariable( value ) ) {
-
-            return deepFreeze( value );
-        }
-
-        return value;
-    },
-
     megaFreeze( value ) {
 
         if( isSubzeroVariable( value ) ) {
 
-            return megaFreeze( value, [] );
+            const processedSubzeroVariables = [];
+
+            megaFreeze( value, processedSubzeroVariables );
+
+            processedSubzeroVariables.length = 0;
+
+            Object.freeze( processedSubzeroVariables );
+
+            return value;
         }
 
         return value;
@@ -52,79 +50,32 @@ const freeze = Object.freeze( function( subzeroVariable ) {
 });
 
 
-const deepFreeze = Object.freeze( function( subzeroVariable ) {
+const megaFreeze = Object.freeze( function( subzeroVariable, processedSubzeroVariables ) {
 
     for( const propertyName of Object.getOwnPropertyNames( subzeroVariable ) ) {
 
         const property = subzeroVariable[ propertyName ];
 
-        if( subzeroVariable.hasOwnProperty( propertyName ) &&
+        if( isSubzeroVariable( property ) && (processedSubzeroVariables.indexOf( property ) < 0 ) ) {
 
-            isObject( property )
-        ) {
+            processedSubzeroVariables.push( property );
 
-            deepFreeze( property );
+            megaFreeze( property, processedSubzeroVariables );
         }
     }
 
-    return Object.freeze( subzeroVariable );
-});
-
-
-const megaFreeze = Object.freeze( function( subzeroVariable, processed ) {
-
-    for( const propertyName of Object.getOwnPropertyNames( subzeroVariable ) ) {
-
-        const property = subzeroVariable[ propertyName ];
-
-        if( subzeroVariable.hasOwnProperty( propertyName ) &&
-
-            isSubzeroVariable( property ) &&
-
-            !isInArray( processed, property )
-        ) {
-
-            processed.push( property );
-
-            megaFreeze( property, processed );
-        }
-    }
-
-    return Object.freeze( subzeroVariable );
+    Object.freeze( subzeroVariable );
 });
 
 
 const isSubzeroVariable = Object.freeze( function( value ) {
 
-    return( isFunctionOrClass( value ) || isObject( value ) );
+    const isObject = ( (value !== null) && (typeof value === OBJECT) );
+
+    const isFunctionOrClass = typeof value === FUNCTION;
+
+    return( isFunctionOrClass || isObject );
 });
 
-
-const isObject = Object.freeze( function( value ) {
-
-    if( (value !== null) && (typeof value === OBJECT) ) {
-
-        return true;
-    }
-
-    return false;
-});
-
-
-const isFunctionOrClass = Object.freeze( function( value ) {
-
-    if( typeof value === FUNCTION ) {
-
-        return true;
-    }
-
-    return false;
-});
-
-
-const isInArray = Object.freeze( function( array, value ) {
-
-    return( array.indexOf( value ) >= 0 );
-});
 
 module.exports = subzero.megaFreeze( subzero );
