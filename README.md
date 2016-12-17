@@ -165,11 +165,11 @@ const reference = subzero.megaFreeze( f );
 
 // ( reference === f );
 // Object.isFrozen( f );
+// Object.isFrozen( f.prototype );
 // Object.isFrozen( f.a );
 // Object.isFrozen( f.a.b );
 // Object.isFrozen( f.a.b.c );
 // Object.isFrozen( f.a.b.c.d );
-// Object.isFrozen( f.prototype );
 // Object.isFrozen( f.prototype.x );
 // Object.isFrozen( f.prototype.x.y );
 // Object.isFrozen( f.prototype.x.y.z );
