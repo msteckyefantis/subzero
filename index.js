@@ -46,9 +46,11 @@ const megaFreezeProperties = Object.freeze( function( subzeroVariable, processed
 
         const property = subzeroVariable[ propertyName ];
 
-        const propertyNotAlreadyProcessed = (processedSubzeroVariables.indexOf( property ) < 0);
+        const propertyIsASubzeroVariable = isSubzeroVariable( property );
 
-        if( isSubzeroVariable( property ) && propertyNotAlreadyProcessed ) {
+        const propertyIsNotAlreadyProcessed = (processedSubzeroVariables.indexOf( property ) < 0);
+
+        if( propertyIsASubzeroVariable && propertyIsNotAlreadyProcessed ) {
 
             processedSubzeroVariables.push( Object.freeze( property ) );
 
