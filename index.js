@@ -33,7 +33,7 @@ const subzero = {
 };
 
 
-const megaFreezeSubzeroVariable = Object.freeze( function( frozenSubzeroVariable ) {
+const megaFreezeSubzeroVariable = Object.freeze( frozenSubzeroVariable => {
 
     const processedSubzeroVariables = [ frozenSubzeroVariable ];
 
@@ -44,10 +44,8 @@ const megaFreezeSubzeroVariable = Object.freeze( function( frozenSubzeroVariable
     Object.freeze( processedSubzeroVariables );
 });
 
-Object.freeze( megaFreezeSubzeroVariable.prototype );
 
-
-const freezeAllPropertiesRecursively = Object.freeze( function( subzeroVariable, processedSubzeroVariables ) {
+const freezeAllPropertiesRecursively = Object.freeze( ( subzeroVariable, processedSubzeroVariables ) => {
 
     for( const propertyName of Object.getOwnPropertyNames( subzeroVariable ) ) {
 
@@ -66,25 +64,19 @@ const freezeAllPropertiesRecursively = Object.freeze( function( subzeroVariable,
     }
 });
 
-Object.freeze( freezeAllPropertiesRecursively.prototype );
 
-
-const isSubzeroVariable = Object.freeze( function( value ) {
+const isSubzeroVariable = Object.freeze( value => {
 
     const isObject = ( (value !== null) && (typeof value === OBJECT) );
 
     return( isFunctionOrClass( value ) || isObject );
 });
 
-Object.freeze( isSubzeroVariable.prototype );
 
-
-const isFunctionOrClass = Object.freeze( function( value ) {
+const isFunctionOrClass = Object.freeze( value => {
 
     return( typeof value === FUNCTION );
 });
-
-Object.freeze( isFunctionOrClass.prototype );
 
 
 module.exports = subzero.megaFreeze( subzero );
