@@ -221,5 +221,19 @@ describe( MODULE_PATH, function() {
                 });
             });
         });
+
+        describe( 'other', function() {
+
+            it( 'subzero is mega frozen itself', function() {
+
+                expect( subzero ).to.be.frozen;
+                expect( subzero.freeze ).to.be.frozen;
+                expect( subzero.megaFreeze ).to.be.frozen;
+                /*
+                    NOTE: certain functions don't have prototypes <<e.g f in: const o = { f() {} } >>
+                    subzero's functions don't have prototypes
+                */
+            });
+        });
     });
 });
