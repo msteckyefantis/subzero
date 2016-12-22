@@ -23,7 +23,7 @@ const subzero = {
 
         if( isSubzeroVariable( value ) ) {
 
-            megaFreezeSubzeroVariableProperties( value );
+            freezeAllProperties( value );
         }
 
         return Object.freeze( value );
@@ -31,7 +31,7 @@ const subzero = {
 };
 
 
-const megaFreezeSubzeroVariableProperties = Object.freeze( subzeroVariable => {
+const freezeAllProperties = Object.freeze( subzeroVariable => {
 
     const processedSubzeroVariables = [];
 
