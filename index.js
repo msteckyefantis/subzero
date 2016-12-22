@@ -21,24 +21,23 @@ const subzero = {
 
     megaFreeze( value ) {
 
-        Object.freeze( value )
-
         if( isSubzeroVariable( value ) ) {
 
-            megaFreezeSubzeroVariable( value );
+            megaFreezeSubzeroVariableProperties( value );
         }
 
-        return value;
+        return Object.freeze( value );
     }
 };
 
 
-const megaFreezeSubzeroVariable = Object.freeze( frozenSubzeroVariable => {
+const megaFreezeSubzeroVariableProperties = Object.freeze( subzeroVariable => {
 
-    const processedSubzeroVariables = [ frozenSubzeroVariable ];
+    const processedSubzeroVariables = [];
 
-    freezeAllPropertiesRecursively( frozenSubzeroVariable, processedSubzeroVariables );
+    freezeAllPropertiesRecursively( subzeroVariable, processedSubzeroVariables );
 
+    // cleanup
     processedSubzeroVariables.length = 0;
 
     Object.freeze( processedSubzeroVariables );
