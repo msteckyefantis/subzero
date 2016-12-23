@@ -10,7 +10,7 @@ Freeze a class, freeze a function, or freeze an object.
 ```
     TypeError: Cannot freeze array buffer views with elements
 ```
-will no longer be thrown when attempting to freeze buffers
+will no longer be thrown when attempting to mega freeze objects with buffers
 
 
 ##install:
