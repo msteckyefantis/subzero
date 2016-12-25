@@ -11,17 +11,7 @@ const FULL_MODULE_PATH = ROOT_PATH + MODULE_PATH;
 
 const subzero = require( FULL_MODULE_PATH );
 
-const nodeVersion = Object.freeze( () => {
-
-    const splitVersion = Object.freeze( process.version.split( '.' ) );
-
-    return Number(
-
-        splitVersion[0].substring( 1 ) +
-        '.' +
-        splitVersion[1]
-    );
-})();
+const nodeVersion = Number( process.versions.node.split( '.' )[0] );
 
 
 describe( MODULE_PATH, function() {
@@ -253,7 +243,7 @@ describe( MODULE_PATH, function() {
                         const bufferWillBeSealed = (
 
                             functionData.bufferWillBeSealedIfVersionIsGreaterOrEqualTo6Dot9 &&
-                            (nodeVersion >= 6.9)
+                            (nodeVersion >= 6)
                         );
 
                         expect( Object.isSealed( buff ) ).to.equal( bufferWillBeSealed );
@@ -431,7 +421,7 @@ describe( MODULE_PATH, function() {
                 console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction ) );
                 console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) );
                 const nodeVersion = Number( process.version.split( '.' )[0].substring( 1 ) + '.' + process.version.split( '.' )[1] );
-                if( nodeVersion >= 6.9 ) console.assert( Object.isSealed( buff ) );
+                if( nodeVersion >= 6 ) console.assert( Object.isSealed( buff ) );
                 console.assert( Object.isFrozen( buff.x ) );
                 console.assert( Object.isFrozen( buff.x.y ) );
                 console.assert( Object.isFrozen( buff.x.f ) );
@@ -440,21 +430,21 @@ describe( MODULE_PATH, function() {
 
             it( 'message about coverage', function() {
 
-                if( nodeVersion >= 6.9) {
+                if( nodeVersion >= 6) {
 
                     console.log(`
 
                     the following coverage results means the code is fully covered for
 
-                    node v6.9 or greater
+                    node v6 or greater
 
                     current version: ${ nodeVersion }
 
                     ----
-                    Statements   : 100% ( 38/38 )
+                    Statements   : 100% ( 36/36 )
                     Branches     : 94.44% ( 17/18 )
                     Functions    : 100% ( 2/2 )
-                    Lines        : 100% ( 38/38 )
+                    Lines        : 100% ( 36/36 )
                     ----
                     `);
                 }
@@ -464,15 +454,15 @@ describe( MODULE_PATH, function() {
 
                     the following coverage results means the code is fully covered for
 
-                    less than node v6.9
+                    less than node v6
 
                     current version: ${ nodeVersion }
 
                     ----
-                    Statements   : 97.37% ( 37/38 )
+                    Statements   : 97.22% ( 35/36 )
                     Branches     : 94.44% ( 17/18 )
                     Functions    : 100% ( 2/2 )
-                    Lines        : 97.37% ( 37/38 )
+                    Lines        : 97.22% ( 35/36 )
                     ----
                     `);
                 }
