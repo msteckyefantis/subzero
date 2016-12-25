@@ -434,7 +434,7 @@ describe( MODULE_PATH, function() {
 
         console.log(`
 
-            Post-test Messages:
+            Post-Test Messages:
         `);
 
         (function displayMessageAboutCoverage() {
