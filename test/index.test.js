@@ -420,7 +420,7 @@ describe( MODULE_PATH, function() {
                 console.assert( Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) );
                 console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction ) );
                 console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) );
-                const nodeVersion = Number( process.version.split( '.' )[0].substring( 1 ) + '.' + process.version.split( '.' )[1] );
+                const nodeVersion = Number( process.versions.node.split( '.' )[0] );
                 if( nodeVersion >= 6 ) console.assert( Object.isSealed( buff ) );
                 console.assert( Object.isFrozen( buff.x ) );
                 console.assert( Object.isFrozen( buff.x.y ) );
