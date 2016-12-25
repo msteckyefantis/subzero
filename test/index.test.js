@@ -11,6 +11,18 @@ const FULL_MODULE_PATH = ROOT_PATH + MODULE_PATH;
 
 const subzero = require( FULL_MODULE_PATH );
 
+const nodeVersion = Object.freeze( () => {
+
+    const splitVersion = Object.freeze( process.version.split( '.' ) );
+
+    return Number(
+
+        splitVersion[0].substring( 1 ) +
+        '.' +
+        splitVersion[1]
+    );
+})();
+
 
 describe( MODULE_PATH, function() {
 
@@ -64,7 +76,9 @@ describe( MODULE_PATH, function() {
 
                     functionsInsideAlreadyFrozenFunctionsWillBeFrozen: false,
 
-                    functionsInsideAlreadyFrozenObjectsWillBeFrozen: false
+                    functionsInsideAlreadyFrozenObjectsWillBeFrozen: false,
+
+                    bufferWillBeSealedIfVersionIsGreaterOrEqualTo6Dot9: false
                 },
 
                 {
@@ -80,7 +94,9 @@ describe( MODULE_PATH, function() {
 
                     functionsInsideAlreadyFrozenFunctionsWillBeFrozen: true,
 
-                    functionsInsideAlreadyFrozenObjectsWillBeFrozen: true
+                    functionsInsideAlreadyFrozenObjectsWillBeFrozen: true,
+
+                    bufferWillBeSealedIfVersionIsGreaterOrEqualTo6Dot9: true
                 }
 
             ].forEach( function( functionData ) {
@@ -147,6 +163,15 @@ describe( MODULE_PATH, function() {
 
                         const frozenFunctionWithNonFrozenObjectInside = Object.freeze( functionToFreeze );
 
+                        const buff = new Buffer( 69 );
+
+                        buff.x = {
+
+                            y: {},
+
+                            f: function(){}
+                        };
+
                         subzeroVariableToValidate.a = {
 
                             b: {
@@ -158,6 +183,8 @@ describe( MODULE_PATH, function() {
                                         InnerClass,
 
                                         controlFunction,
+
+                                        buff,
 
                                         e: Object.freeze({
 
@@ -203,20 +230,37 @@ describe( MODULE_PATH, function() {
                         expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x.y ) ).to.equal( functionData.innerObjectsWillBeFrozen );
                         expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x.y.z ) ).to.equal( functionData.innerObjectsWillBeFrozen );
                         expect( Object.isFrozen( subzeroVariableToValidate[ subzeroVariableData.secondObjectName ].x.w ) ).to.equal( functionData.innerObjectsWillBeFrozen );
+
                         expect( Object.isFrozen( InnerClass ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( InnerClass.prototype ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( InnerClass.x ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( InnerClass.x.y ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
+
                         expect( Object.isFrozen( controlFunction ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( controlFunction.prototype ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( controlFunction.x ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
                         expect( Object.isFrozen( controlFunction.x.y ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
+
                         expect( Object.isFrozen( objectInsideAlreadyFrozenObject ) ).to.equal( functionData.objectsInsideAlreadyFrozenObjectsWillBeFrozen );
                         expect( Object.isFrozen( objectInsideAlreadyFrozenFunction ) ).to.equal( functionData.objectsInsideAlreadyFrozenFunctionsWillBeFrozen );
+
                         expect( Object.isFrozen( functionInsideAlreadyFrozenFunction ) ).to.equal( functionData.functionsInsideAlreadyFrozenFunctionsWillBeFrozen );
                         expect( Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) ).to.equal( functionData.objectsInsideAlreadyFrozenFunctionsWillBeFrozen );
+
                         expect( Object.isFrozen( functionInsideAlreadyFrozenObject ) ).to.equal( functionData.functionsInsideAlreadyFrozenObjectsWillBeFrozen )
                         expect( Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) ).to.equal( functionData.objectsInsideAlreadyFrozenFunctionsWillBeFrozen );
+
+                        const bufferWillBeSealed = (
+
+                            functionData.bufferWillBeSealedIfVersionIsGreaterOrEqualTo6Dot9 &&
+                            (nodeVersion >= 6.9)
+                        );
+
+                        expect( Object.isSealed( buff ) ).to.equal( bufferWillBeSealed );
+                        expect( Object.isFrozen( buff.x ) ).to.equal( functionData.innerObjectsWillBeFrozen );
+                        expect( Object.isFrozen( buff.x.y ) ).to.equal( functionData.innerObjectsWillBeFrozen );
+                        expect( Object.isFrozen( buff.x.f ) ).to.equal( functionData.innerFunctionsAndClassesWillBeFrozen );
+                        expect( Object.isFrozen( buff.x.f.prototype ) ).to.equal( functionData.innerObjectsWillBeFrozen );
                     });
                 });
             });
@@ -233,6 +277,205 @@ describe( MODULE_PATH, function() {
                     NOTE: certain functions don't have prototypes <<e.g f in: const o = { f() {} } >>
                     subzero's functions don't have prototypes
                 */
+            });
+
+            it( 'README.md megaFreeze example test', function() {
+
+
+                /*
+                	this example uses a function,
+                    subzero.megaFreeze also works with objects and classes
+                */
+                function f() {}
+
+                const InnerClass = class {};
+
+                InnerClass.x = {
+
+                    y: {}
+                };
+
+                const innerFunction = function() {};
+
+                innerFunction.x = {
+
+                    y: {}
+                };
+
+                const objectInsideAlreadyFrozenObject = {};
+
+                const functionInsideAlreadyFrozenObject = function() {};
+
+                const objectInsideAlreadyFrozenFunction = {};
+
+                const functionInsideAlreadyFrozenFunction = function() {};
+
+                const functionToFreeze = function() {};
+
+                functionToFreeze.objectInsideAlreadyFrozenFunction = objectInsideAlreadyFrozenFunction;
+
+                functionToFreeze.functionInsideAlreadyFrozenFunction = functionInsideAlreadyFrozenFunction;
+
+                const frozenFunctionWithNonFrozenObjectAndFunctionInside = Object.freeze( functionToFreeze );
+
+                const buff = new Buffer( 69 );
+
+                buff.x = {
+
+                    y: {},
+
+                    f: function() {}
+                };
+
+                f.a = {
+
+                    b: {
+
+                        c: {
+
+                            d: {
+
+                                InnerClass,
+
+                                innerFunction,
+
+                                buff,
+
+                                e: Object.freeze({
+
+                                    objectInsideAlreadyFrozenObject,
+
+                                    functionInsideAlreadyFrozenObject
+                                }),
+
+                                frozenFunctionWithNonFrozenObjectAndFunctionInside
+                            }
+                        }
+                    }
+                };
+
+                f.prototype.x = {
+
+                    y: {
+
+                        z: {}
+                    },
+
+                    w: {}
+                };
+
+
+                /*
+                    It's time to freeze your opponent for the flawless victory with fatality.
+
+                	None of the following assertions will throw an AssertionError:
+                */
+
+                console.assert( !Object.isFrozen( f ) );
+                console.assert( !Object.isFrozen( f.prototype ) );
+                console.assert( !Object.isFrozen( f.a ) );
+                console.assert( !Object.isFrozen( f.a.b ) );
+                console.assert( !Object.isFrozen( f.a.b.c ) );
+                console.assert( !Object.isFrozen( f.a.b.c.d ) );
+                console.assert( !Object.isFrozen( f.prototype.x ) );
+                console.assert( !Object.isFrozen( f.prototype.x.y ) );
+                console.assert( !Object.isFrozen( f.prototype.x.y.z ) );
+                console.assert( !Object.isFrozen( f.prototype.x.w ) );
+                console.assert( !Object.isFrozen( InnerClass ) );
+                console.assert( !Object.isFrozen( InnerClass.prototype ) );
+                console.assert( !Object.isFrozen( InnerClass.x ) );
+                console.assert( !Object.isFrozen( InnerClass.x.y ) );
+                console.assert( !Object.isFrozen( innerFunction ) );
+                console.assert( !Object.isFrozen( innerFunction.prototype ) );
+                console.assert( !Object.isFrozen( innerFunction.x ) );
+                console.assert( !Object.isFrozen( innerFunction.x.y ) );
+                console.assert( !Object.isFrozen( objectInsideAlreadyFrozenObject ) );
+                console.assert( !Object.isFrozen( objectInsideAlreadyFrozenFunction ) );
+                console.assert( !Object.isFrozen( functionInsideAlreadyFrozenObject ) );
+                console.assert( !Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) );
+                console.assert( !Object.isFrozen( functionInsideAlreadyFrozenFunction ) );
+                console.assert( !Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) );
+                console.assert( !Object.isSealed( buff ) ); // you cannot freeze buffers
+                console.assert( !Object.isFrozen( buff.x ) );
+                console.assert( !Object.isFrozen( buff.x.y ) );
+                console.assert( !Object.isFrozen( buff.x.f ) );
+                console.assert( !Object.isFrozen( buff.x.f.prototype ) );
+
+                // Mega Freeze f
+                const reference = subzero.megaFreeze( f );
+
+                console.assert( ( reference === f ) );
+
+                console.assert( Object.isFrozen( f ) );
+                console.assert( Object.isFrozen( f.prototype ) );
+                console.assert( Object.isFrozen( f.a ) );
+                console.assert( Object.isFrozen( f.a.b ) );
+                console.assert( Object.isFrozen( f.a.b.c ) );
+                console.assert( Object.isFrozen( f.a.b.c.d ) );
+                console.assert( Object.isFrozen( f.prototype.x ) );
+                console.assert( Object.isFrozen( f.prototype.x.y ) );
+                console.assert( Object.isFrozen( f.prototype.x.y.z ) );
+                console.assert( Object.isFrozen( f.prototype.x.w ) );
+                console.assert( Object.isFrozen( InnerClass ) );
+                console.assert( Object.isFrozen( InnerClass.prototype ) );
+                console.assert( Object.isFrozen( InnerClass.x ) );
+                console.assert( Object.isFrozen( InnerClass.x.y ) );
+                console.assert( Object.isFrozen( innerFunction ) );
+                console.assert( Object.isFrozen( innerFunction.prototype ) );
+                console.assert( Object.isFrozen( innerFunction.x ) );
+                console.assert( Object.isFrozen( innerFunction.x.y ) );
+                console.assert( Object.isFrozen( objectInsideAlreadyFrozenObject ) );
+                console.assert( Object.isFrozen( objectInsideAlreadyFrozenFunction ) );
+                console.assert( Object.isFrozen( functionInsideAlreadyFrozenObject ) );
+                console.assert( Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) );
+                console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction ) );
+                console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) );
+                const nodeVersion = Number( process.version.split( '.' )[0].substring( 1 ) + '.' + process.version.split( '.' )[1] );
+                if( nodeVersion >= 6.9 ) console.assert( Object.isSealed( buff ) );
+                console.assert( Object.isFrozen( buff.x ) );
+                console.assert( Object.isFrozen( buff.x.y ) );
+                console.assert( Object.isFrozen( buff.x.f ) );
+                console.assert( Object.isFrozen( buff.x.f.prototype ) );
+            });
+
+            it( 'message about coverage', function() {
+
+                if( nodeVersion >= 6.9) {
+
+                    console.log(`
+
+                    the following coverage results means the code is fully covered for
+
+                    node v6.9 or greater
+
+                    current version: ${ nodeVersion }
+
+                    ----
+                    Statements   : 100% ( 38/38 )
+                    Branches     : 94.44% ( 17/18 )
+                    Functions    : 100% ( 2/2 )
+                    Lines        : 100% ( 38/38 )
+                    ----
+                    `);
+                }
+                else {
+
+                    console.log(`
+
+                    the following coverage results means the code is fully covered for
+
+                    less than node v6.9
+
+                    current version: ${ nodeVersion }
+
+                    ----
+                    Statements   : 97.37% ( 37/38 )
+                    Branches     : 94.44% ( 17/18 )
+                    Functions    : 100% ( 2/2 )
+                    Lines        : 97.37% ( 37/38 )
+                    ----
+                    `);
+                }
             });
         });
     });

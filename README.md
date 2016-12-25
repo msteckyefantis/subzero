@@ -6,13 +6,6 @@
 
 Freeze a class, freeze a function, or freeze an object.
 
-#####Note: Bugfix coming soon,
-```
-    TypeError: Cannot freeze array buffer views with elements
-```
-will no longer be thrown when attempting to mega freeze objects with buffers
-
-
 ##install:
 
 ```
@@ -129,6 +122,15 @@ functionToFreeze.functionInsideAlreadyFrozenFunction = functionInsideAlreadyFroz
 
 const frozenFunctionWithNonFrozenObjectAndFunctionInside = Object.freeze( functionToFreeze );
 
+const buff = new Buffer( 69 );
+
+buff.x = {
+
+    y: {},
+
+    f: function() {}
+};
+
 f.a = {
 
     b: {
@@ -140,6 +142,8 @@ f.a = {
                 InnerClass,
 
                 innerFunction,
+
+                buff,
 
                 e: Object.freeze({
 
@@ -194,6 +198,11 @@ console.assert( !Object.isFrozen( functionInsideAlreadyFrozenObject ) );
 console.assert( !Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) );
 console.assert( !Object.isFrozen( functionInsideAlreadyFrozenFunction ) );
 console.assert( !Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) );
+console.assert( !Object.isSealed( buff ) ); // you cannot freeze buffers
+console.assert( !Object.isFrozen( buff.x ) );
+console.assert( !Object.isFrozen( buff.x.y ) );
+console.assert( !Object.isFrozen( buff.x.f ) );
+console.assert( !Object.isFrozen( buff.x.f.prototype ) );
 
 // Mega Freeze f
 const reference = subzero.megaFreeze( f );
@@ -224,6 +233,12 @@ console.assert( Object.isFrozen( functionInsideAlreadyFrozenObject ) );
 console.assert( Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) );
 console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction ) );
 console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) );
+const nodeVersion = Number( process.version.split( '.' )[0].substring( 1 ) + '.' + process.version.split( '.' )[1] );
+if( nodeVersion >= 6.9 ) console.assert( Object.isSealed( buff ) );
+console.assert( Object.isFrozen( buff.x ) );
+console.assert( Object.isFrozen( buff.x.y ) );
+console.assert( Object.isFrozen( buff.x.f ) );
+console.assert( Object.isFrozen( buff.x.f.prototype ) );
 ```
 
 [![frieza22.gif](https://s23.postimg.org/d6ri2wwm3/frieza22.gif)](https://postimg.org/image/djiw93evr/)

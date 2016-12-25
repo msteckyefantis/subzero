@@ -4,6 +4,18 @@ const OBJECT = 'object';
 
 const FUNCTION = 'function';
 
+const nodeVersion = Object.freeze( () => {
+
+    const splitVersion = Object.freeze( process.version.split( '.' ) );
+
+    return Number(
+
+        splitVersion[0].substring( 1 ) +
+        '.' +
+        splitVersion[1]
+    );
+})();
+
 // NOTE: a subzeroVariable refers to an object, a function, or a class
 const subzero = {
 
@@ -56,10 +68,25 @@ const freezeAllPropertiesRecursively = Object.freeze( ( subzeroVariable, process
 
         if( propertyIsASubzeroVariable && propertyIsNotAlreadyProcessed ) {
 
-            processedSubzeroVariables.push( Object.freeze( property ) );
+            maximallyFreezeSubzeroVariable( property );
+
+            processedSubzeroVariables.push( property )
 
             freezeAllPropertiesRecursively( property, processedSubzeroVariables );
         }
+    }
+});
+
+
+const maximallyFreezeSubzeroVariable = Object.freeze( subzeroVariable => {
+
+    if( !(subzeroVariable instanceof Buffer) ) {
+
+        Object.freeze( subzeroVariable );
+    }
+    else if( nodeVersion >= 6.9 ) {
+
+        Object.seal( subzeroVariable );
     }
 });
 
