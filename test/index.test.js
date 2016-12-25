@@ -427,46 +427,54 @@ describe( MODULE_PATH, function() {
                 console.assert( Object.isFrozen( buff.x.f ) );
                 console.assert( Object.isFrozen( buff.x.f.prototype ) );
             });
-
-            it( 'message about coverage', function() {
-
-                if( nodeVersion >= 6) {
-
-                    console.log(`
-
-                    the following coverage results means the code is fully covered for
-
-                    node v6 or greater
-
-                    current version: ${ nodeVersion }
-
-                    ----
-                    Statements   : 100% ( 36/36 )
-                    Branches     : 94.44% ( 17/18 )
-                    Functions    : 100% ( 2/2 )
-                    Lines        : 100% ( 36/36 )
-                    ----
-                    `);
-                }
-                else {
-
-                    console.log(`
-
-                    the following coverage results means the code is fully covered for
-
-                    less than node v6
-
-                    current version: ${ nodeVersion }
-
-                    ----
-                    Statements   : 97.22% ( 35/36 )
-                    Branches     : 94.44% ( 17/18 )
-                    Functions    : 100% ( 2/2 )
-                    Lines        : 97.22% ( 35/36 )
-                    ----
-                    `);
-                }
-            });
         });
+    });
+
+    after( function() {
+
+        console.log(`
+
+            Post-test Messages:
+        `);
+
+        (function displayMessageAboutCoverage() {
+
+            if( nodeVersion >= 6) {
+
+                console.log(`
+
+                the following coverage results means the code is fully covered for
+
+                node v6 or greater
+
+                current version: ${ nodeVersion }
+
+                ----
+                Statements   : 100% ( 36/36 )
+                Branches     : 94.44% ( 17/18 )
+                Functions    : 100% ( 2/2 )
+                Lines        : 100% ( 36/36 )
+                ----
+                `);
+            }
+            else {
+
+                console.log(`
+
+                the following coverage results means the code is fully covered for
+
+                less than node v6
+
+                current version: ${ nodeVersion }
+
+                ----
+                Statements   : 97.22% ( 35/36 )
+                Branches     : 94.44% ( 17/18 )
+                Functions    : 100% ( 2/2 )
+                Lines        : 97.22% ( 35/36 )
+                ----
+                `);
+            }
+        })();
     });
 });
