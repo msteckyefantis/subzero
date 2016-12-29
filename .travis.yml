@@ -1,6 +1,7 @@
 language: node_js
 node_js:
   - "node"
+  - "6"
   - "4.3.2"
 env:
   - CXX=g++-4.8
