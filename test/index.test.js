@@ -27,6 +27,12 @@ describe( MODULE_PATH, function() {
 
             ].forEach( function( functionName ) {
 
+                it( `${ functionName } with undefined input`, function() {
+
+                    expect( subzero[ functionName ]( undefined ) ).to.equal( undefined );
+                });
+
+
                 it( `${ functionName } with number input`, function() {
 
                     const controlNumber = 69;
@@ -450,10 +456,10 @@ describe( MODULE_PATH, function() {
                 current version: ${ nodeVersion }
 
                 ----
-                Statements   : 100% ( 36/36 )
+                Statements   : 100% ( 35/35 )
                 Branches     : 94.44% ( 17/18 )
                 Functions    : 100% ( 2/2 )
-                Lines        : 100% ( 36/36 )
+                Lines        : 100% ( 35/35 )
                 ----
                 `);
             }
@@ -468,10 +474,10 @@ describe( MODULE_PATH, function() {
                 current version: ${ nodeVersion }
 
                 ----
-                Statements   : 97.22% ( 35/36 )
+                Statements   : 97.14% ( 34/35 )
                 Branches     : 94.44% ( 17/18 )
                 Functions    : 100% ( 2/2 )
-                Lines        : 97.22% ( 35/36 )
+                Lines        : 97.14% ( 34/35 )
                 ----
                 `);
             }
