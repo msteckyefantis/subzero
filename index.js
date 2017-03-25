@@ -23,10 +23,12 @@ const subzero = {
 
         if( isSubzeroVariable( value ) ) {
 
+            maximallyFreezeSubzeroVariable( value );
+
             freezeAllProperties( value );
         }
 
-        return Object.freeze( value );
+        return value;
     }
 };
 

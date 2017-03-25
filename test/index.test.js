@@ -434,6 +434,23 @@ describe( MODULE_PATH, function() {
                 console.assert( Object.isFrozen( buff.x.f.prototype ) );
             });
         });
+
+        describe( 'mega freezing a buffer', function() {
+
+            it( 'can mega freeze a buffer', function() {
+
+                const a = new Buffer( 69 );
+
+                a.b = { c: {} };
+
+                subzero.megaFreeze( a );
+
+                if( nodeVersion >= 6 ) console.assert( Object.isSealed( a ) );
+
+                console.assert( Object.isFrozen( a.b ) );
+                console.assert( Object.isFrozen( a.b.c ) );
+            });
+        });
     });
 
     after( function() {
@@ -456,10 +473,10 @@ describe( MODULE_PATH, function() {
                 current version: ${ nodeVersion }
 
                 ----
-                Statements   : 100% ( 35/35 )
+                Statements   : 100% ( 36/36 )
                 Branches     : 94.44% ( 17/18 )
                 Functions    : 100% ( 2/2 )
-                Lines        : 100% ( 35/35 )
+                Lines        : 100% ( 36/36 )
                 ----
                 `);
             }
@@ -474,10 +491,10 @@ describe( MODULE_PATH, function() {
                 current version: ${ nodeVersion }
 
                 ----
-                Statements   : 97.14% ( 34/35 )
+                Statements   : 97.22% ( 35/36 )
                 Branches     : 94.44% ( 17/18 )
                 Functions    : 100% ( 2/2 )
-                Lines        : 97.14% ( 34/35 )
+                Lines        : 97.22% ( 35/36 )
                 ----
                 `);
             }

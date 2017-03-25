@@ -1,20 +1,20 @@
-#subzero [![npm version](https://badge.fury.io/js/subzero.svg)](https://badge.fury.io/js/subzero) [![Build Status](https://travis-ci.org/msteckyefantis/subzero.svg?branch=master)](https://travis-ci.org/msteckyefantis/subzero)
+# subzero [![npm version](https://badge.fury.io/js/subzero.svg)](https://badge.fury.io/js/subzero) [![Build Status](https://travis-ci.org/msteckyefantis/subzero.svg?branch=master)](https://travis-ci.org/msteckyefantis/subzero)
 
 [![mksfw.gif](https://s30.postimg.org/vd4asvu9t/mksfw.gif)](https://postimg.org/image/vd4asvu9p/)
 
-##About:
+## About:
 
 Freeze a class, freeze a function, or freeze an object.
 
-##install:
+## install:
 
 ```
 npm install subzero
 ```
 
-##usage:
+## usage:
 
-####function list (each function explained in more detail below):
+#### function list (each function explained in more detail below):
 
 1. [subzero.freeze](#1-subzerofreeze-functionorclassorobjecttofreeze-)
 2. [subzero.megaFreeze](#2-subzeromegafreeze-functionorclassorobjecttofreeze-)
@@ -24,14 +24,14 @@ npm install subzero
 <br>
 ❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
 
-####no-op:
+#### no-op:
 If the input value is not an object, a function, or a class for either of subzero's functions, the return value will be the input value unaltered.
 
 
 [![letitgo.gif](https://s27.postimg.org/gym5t7iib/letitgo.gif)](https://postimg.org/image/ptn03q7an/)
 
 
-###1) subzero.freeze( functionOrClassOrObjectToFreeze )
+### 1) subzero.freeze( functionOrClassOrObjectToFreeze )
 Freeze a class or a function and its prototype. For object input, it acts the exact same way as [Object.freeze](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze).
 
 ```.js
@@ -78,7 +78,7 @@ const reference = subzero.freeze( C );
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
 
-###2) subzero.megaFreeze( functionOrClassOrObjectToFreeze )
+### 2) subzero.megaFreeze( functionOrClassOrObjectToFreeze )
 Deep freeze a class, a function, or an object. This will freeze any classes, functions, and objects within the class/function/object being mega-frozen. It works by recursively freezing anything of type `"object"` or `"function"`.
 
 ```.js
