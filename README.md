@@ -4,7 +4,7 @@
 
 ## About:
 
-Freeze a class, freeze a function, or freeze an object.
+Freeze a class, freeze a function, or freeze an object. For Node version 6 or greater.
 
 ## install:
 
@@ -16,69 +16,15 @@ npm install subzero
 
 #### function list (each function explained in more detail below):
 
-1. [subzero.freeze](#1-subzerofreeze-functionorclassorobjecttofreeze-)
-2. [subzero.megaFreeze](#2-subzeromegafreeze-functionorclassorobjecttofreeze-)
+1. [subzero.megaFreeze](#1-subzeromegafreeze-functionorclassorobjecttofreeze-)
 
 >Note: the mega freeze function was inspired by [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze) and  [deep-freeze](https://github.com/substack/deep-freeze).
 
-<br>
-❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
-
-#### no-op:
-If the input value is not an object, a function, or a class for either of subzero's functions, the return value will be the input value unaltered.
-
-
-[![letitgo.gif](https://s27.postimg.org/gym5t7iib/letitgo.gif)](https://postimg.org/image/ptn03q7an/)
-
-
-### 1) subzero.freeze( functionOrClassOrObjectToFreeze )
-Freeze a class or a function and its prototype. For object input, it acts the exact same way as [Object.freeze](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze).
-
-```.js
-'use strict';
-
-const subzero = require( 'subzero' );
-
-/*
-	this example uses a class,
-    subzero.freeze also works with objects and functions
-*/
-class C {
-
-	static f() { return 69; }
-
-	f() { return 22; }
-}
-
-const reference = subzero.freeze( C );
-
-/*
-	the following statements will now return true:
-*/
-
-// ( reference === C );
-// Object.isFrozen( C );
-// Object.isFrozen( C.prototype );
-
-/*
-	as a result the following statements will now throw TypeErrors in strict mode:
-*/
-
-// C.g = function() { return 42 };
-// C.f = function() { return 42 };
-// delete C.f;
-// C.constant = 42;
-// C.prototype.g = function() { return 42 };
-// C.prototype.f = function() { return 42 };
-// delete C.prototype.f;
-// C.prototype.constant = 42;
-```
-
-
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
+<br>
 
-### 2) subzero.megaFreeze( functionOrClassOrObjectToFreeze )
+### 1) subzero.megaFreeze( functionOrClassOrObjectToFreeze )
 Deep freeze a class, a function, or an object. This will freeze any classes, functions, and objects within the class/function/object being mega-frozen. It works by recursively freezing anything of type `"object"` or `"function"`.
 
 ```.js
@@ -233,12 +179,18 @@ console.assert( Object.isFrozen( functionInsideAlreadyFrozenObject ) );
 console.assert( Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) );
 console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction ) );
 console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) );
-const nodeVersion = Number( process.versions.node.split( '.' )[0] );
-if( nodeVersion >= 6 ) console.assert( Object.isSealed( buff ) );
+console.assert( Object.isSealed( buff ) );
 console.assert( Object.isFrozen( buff.x ) );
 console.assert( Object.isFrozen( buff.x.y ) );
 console.assert( Object.isFrozen( buff.x.f ) );
 console.assert( Object.isFrozen( buff.x.f.prototype ) );
 ```
+
+[![letitgo.gif](https://s27.postimg.org/gym5t7iib/letitgo.gif)](https://postimg.org/image/ptn03q7an/)
+
+#### no-op:
+If the input value is not an object, a function, or a class for subzero's megaFreeze function, the return value will be the input value unaltered.
+
+
 
 [![frieza22.gif](https://s23.postimg.org/d6ri2wwm3/frieza22.gif)](https://postimg.org/image/djiw93evr/)

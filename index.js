@@ -4,20 +4,9 @@ const OBJECT = 'object';
 
 const FUNCTION = 'function';
 
-const nodeVersion = Number( process.versions.node.split( '.' )[0] );
 
 // NOTE: a subzeroVariable refers to an object, a function, or a class
 const subzero = {
-
-    freeze( value ) {
-
-        if( isFunctionOrClass( value ) && value.prototype ) {
-
-            Object.freeze( value.prototype );
-        }
-
-        return Object.freeze( value );
-    },
 
     megaFreeze( value ) {
 
@@ -33,66 +22,84 @@ const subzero = {
 };
 
 
-const freezeAllProperties = Object.freeze( subzeroVariable => {
+const freezeAllProperties = Object.freeze(
 
-    const processedSubzeroVariables = [];
+    subzeroVariable => {
 
-    freezeAllPropertiesRecursively( subzeroVariable, processedSubzeroVariables );
+        const processedSubzeroVariables = [];
 
-    // cleanup
-    processedSubzeroVariables.length = 0;
+        freezeAllPropertiesRecursively( subzeroVariable, processedSubzeroVariables );
 
-    Object.freeze( processedSubzeroVariables );
-});
+        // cleanup
+        processedSubzeroVariables.length = 0;
+
+        Object.freeze( processedSubzeroVariables );
+    }
+);
 
 
-const freezeAllPropertiesRecursively = Object.freeze( ( subzeroVariable, processedSubzeroVariables ) => {
+const freezeAllPropertiesRecursively = Object.freeze(
 
-    for( const propertyName of Object.getOwnPropertyNames( subzeroVariable ) ) {
+    ( subzeroVariable, processedSubzeroVariables ) => {
 
-        const property = subzeroVariable[ propertyName ];
+        for( const propertyName of Object.getOwnPropertyNames( subzeroVariable ) ) {
 
-        const propertyIsASubzeroVariable = isSubzeroVariable( property );
+            const property = subzeroVariable[ propertyName ];
 
-        const propertyIsNotAlreadyProcessed = (processedSubzeroVariables.indexOf( property ) < 0);
+            const propertyIsASubzeroVariable = isSubzeroVariable( property );
 
-        if( propertyIsASubzeroVariable && propertyIsNotAlreadyProcessed ) {
+            const propertyIsNotAlreadyProcessed = (
 
-            maximallyFreezeSubzeroVariable( property );
+                processedSubzeroVariables.indexOf( property ) < 0
+            );
 
-            processedSubzeroVariables.push( property )
+            if( propertyIsASubzeroVariable && propertyIsNotAlreadyProcessed ) {
 
-            freezeAllPropertiesRecursively( property, processedSubzeroVariables );
+                maximallyFreezeSubzeroVariable( property );
+
+                processedSubzeroVariables.push( property )
+
+                freezeAllPropertiesRecursively( property, processedSubzeroVariables );
+            }
         }
     }
-});
+);
 
 
-const maximallyFreezeSubzeroVariable = Object.freeze( subzeroVariable => {
+const maximallyFreezeSubzeroVariable = Object.freeze(
 
-    if( !(subzeroVariable instanceof Buffer) ) {
+    subzeroVariable => {
 
-        Object.freeze( subzeroVariable );
+        if( !(subzeroVariable instanceof Buffer) ) {
+
+            Object.freeze( subzeroVariable );
+        }
+        else {
+
+            Object.seal( subzeroVariable );
+        }
     }
-    else if( nodeVersion >= 6 ) {
+);
 
-        Object.seal( subzeroVariable );
+
+const isSubzeroVariable = Object.freeze(
+
+    value => {
+
+        const isObject = ( (value !== null) && (typeof value === OBJECT) );
+
+        return( isFunctionOrClass( value ) || isObject );
     }
-});
+);
 
 
-const isSubzeroVariable = Object.freeze( value => {
+const isFunctionOrClass = Object.freeze(
 
-    const isObject = ( (value !== null) && (typeof value === OBJECT) );
+    value => {
 
-    return( isFunctionOrClass( value ) || isObject );
-});
-
-
-const isFunctionOrClass = Object.freeze( value => {
-
-    return( typeof value === FUNCTION );
-});
+        return( typeof value === FUNCTION );
+    }
+);
 
 
 module.exports = subzero.megaFreeze( subzero );

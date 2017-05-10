@@ -11,8 +11,6 @@ const FULL_MODULE_PATH = ROOT_PATH + MODULE_PATH;
 
 const subzero = require( FULL_MODULE_PATH );
 
-const nodeVersion = Number( process.versions.node.split( '.' )[0] );
-
 
 describe( MODULE_PATH, function() {
 
@@ -22,7 +20,6 @@ describe( MODULE_PATH, function() {
 
             [
 
-                'freeze',
                 'megaFreeze'
 
             ].forEach( function( functionName ) {
@@ -60,24 +57,6 @@ describe( MODULE_PATH, function() {
 
             [
                 {
-                    name: 'freeze',
-
-                    innerObjectsWillBeFrozen: false,
-
-                    innerFunctionsAndClassesWillBeFrozen: false,
-
-                    objectsInsideAlreadyFrozenObjectsWillBeFrozen: false,
-
-                    objectsInsideAlreadyFrozenFunctionsWillBeFrozen: false,
-
-                    functionsInsideAlreadyFrozenFunctionsWillBeFrozen: false,
-
-                    functionsInsideAlreadyFrozenObjectsWillBeFrozen: false,
-
-                    bufferWillBeSealedIfVersionIsGreaterOrEqualTo6Dot9: false
-                },
-
-                {
                     name: 'megaFreeze',
 
                     innerObjectsWillBeFrozen: true,
@@ -90,9 +69,7 @@ describe( MODULE_PATH, function() {
 
                     functionsInsideAlreadyFrozenFunctionsWillBeFrozen: true,
 
-                    functionsInsideAlreadyFrozenObjectsWillBeFrozen: true,
-
-                    bufferWillBeSealedIfVersionIsGreaterOrEqualTo6Dot9: true
+                    functionsInsideAlreadyFrozenObjectsWillBeFrozen: true
                 }
 
             ].forEach( function( functionData ) {
@@ -246,11 +223,7 @@ describe( MODULE_PATH, function() {
                         expect( Object.isFrozen( functionInsideAlreadyFrozenObject ) ).to.equal( functionData.functionsInsideAlreadyFrozenObjectsWillBeFrozen )
                         expect( Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) ).to.equal( functionData.objectsInsideAlreadyFrozenFunctionsWillBeFrozen );
 
-                        const bufferWillBeSealed = (
-
-                            functionData.bufferWillBeSealedIfVersionIsGreaterOrEqualTo6Dot9 &&
-                            (nodeVersion >= 6)
-                        );
+                        const bufferWillBeSealed = true;
 
                         expect( Object.isSealed( buff ) ).to.equal( bufferWillBeSealed );
                         expect( Object.isFrozen( buff.x ) ).to.equal( functionData.innerObjectsWillBeFrozen );
@@ -267,7 +240,6 @@ describe( MODULE_PATH, function() {
             it( 'subzero is mega frozen itself', function() {
 
                 expect( subzero ).to.be.frozen;
-                expect( subzero.freeze ).to.be.frozen;
                 expect( subzero.megaFreeze ).to.be.frozen;
                 /*
                     NOTE: certain functions don't have prototypes <<e.g f in: const o = { f() {} } >>
@@ -276,7 +248,6 @@ describe( MODULE_PATH, function() {
             });
 
             it( 'README.md megaFreeze example test', function() {
-
 
                 /*
                 	this example uses a function,
@@ -360,7 +331,6 @@ describe( MODULE_PATH, function() {
                     w: {}
                 };
 
-
                 /*
                     It's time to freeze your opponent for the flawless victory with fatality.
 
@@ -426,8 +396,7 @@ describe( MODULE_PATH, function() {
                 console.assert( Object.isFrozen( functionInsideAlreadyFrozenObject.prototype ) );
                 console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction ) );
                 console.assert( Object.isFrozen( functionInsideAlreadyFrozenFunction.prototype ) );
-                const nodeVersion = Number( process.versions.node.split( '.' )[0] );
-                if( nodeVersion >= 6 ) console.assert( Object.isSealed( buff ) );
+                console.assert( Object.isSealed( buff ) );
                 console.assert( Object.isFrozen( buff.x ) );
                 console.assert( Object.isFrozen( buff.x.y ) );
                 console.assert( Object.isFrozen( buff.x.f ) );
@@ -445,59 +414,10 @@ describe( MODULE_PATH, function() {
 
                 subzero.megaFreeze( a );
 
-                if( nodeVersion >= 6 ) console.assert( Object.isSealed( a ) );
-
+                console.assert( Object.isSealed( a ) );
                 console.assert( Object.isFrozen( a.b ) );
                 console.assert( Object.isFrozen( a.b.c ) );
             });
         });
-    });
-
-    after( function() {
-
-        console.log(`
-
-            Post-Test Messages:
-        `);
-
-        (function displayMessageAboutCoverage() {
-
-            if( nodeVersion >= 6) {
-
-                console.log(`
-
-                the following coverage results means the code is fully covered for
-
-                node v6 or greater
-
-                current version: ${ nodeVersion }
-
-                ----
-                Statements   : 100% ( 36/36 )
-                Branches     : 94.44% ( 17/18 )
-                Functions    : 100% ( 2/2 )
-                Lines        : 100% ( 36/36 )
-                ----
-                `);
-            }
-            else {
-
-                console.log(`
-
-                the following coverage results means the code is fully covered for
-
-                less than node v6
-
-                current version: ${ nodeVersion }
-
-                ----
-                Statements   : 97.22% ( 35/36 )
-                Branches     : 94.44% ( 17/18 )
-                Functions    : 100% ( 2/2 )
-                Lines        : 97.22% ( 35/36 )
-                ----
-                `);
-            }
-        })();
     });
 });
